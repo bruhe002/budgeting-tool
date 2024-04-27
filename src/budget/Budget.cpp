@@ -59,6 +59,8 @@ void Budget::addExpense(const Expense& exp) {
     // After the expense is added to the appropriate vector
     // save it to storage file
     saveExpenseToFile(exp);
+
+    // Display updated list to the UI (todo)
 }
 
 /**
@@ -81,7 +83,30 @@ void Budget::saveToFile() const {
  * @return The total sum of the expenses
 */
 float Budget::sumUpExpenses() {
-    // pass
+    // Sum up all for vector expenses
+    float fi_sum = 0.0;  // fixed-income sum
+    float oti_sum = 0.0;  // one-time-income sum
+    float fc_sum = 0.0;  // fixed-cost sum
+    float otc_sum = 0.0;  // one-time-cost sum
+
+    for(auto e : fixed_income_) {
+        fi_sum = fi_sum + e; 
+    }
+
+    for(auto e : one_time_income_) {
+        oti_sum = oti_sum + e;
+    }
+
+    for(auto e : fixed_cost_) {
+        fc_sum = fc_sum + e;
+    }
+
+    for(auto e : one_time_cost_) {
+        otc_sum = otc_sum + e;
+    }
+
+    return fi_sum + oti_sum - fc_sum - otc_sum;
+
 }
 
 /**
@@ -89,7 +114,7 @@ float Budget::sumUpExpenses() {
  * @param value The recent total of the expenses
 */
 void Budget::setProfit(float value) {
-    // pass
+    profit_ = value;
 }
 
 /**
@@ -97,7 +122,7 @@ void Budget::setProfit(float value) {
  * @return The Budget's profit
 */
 float Budget::getProfit() const {
-    // pass
+    return profit_;
 }
 
 /**
@@ -107,9 +132,5 @@ float Budget::getProfit() const {
 string Budget::displayBudget() const {
     // pass
 }
-
-
-
-
 
 }  // namespace budget
