@@ -22,12 +22,20 @@ struct Expense {
     float value_;
     bool fixed_;
     bool income_;
+
+    float operator+(const Expense& exp) {
+        return this->value_ + exp.value_;
+    }
 };
 
 // Overload the << operator
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
     return os;
+}
+
+float operator+(float f, const Expense& e) {
+    return f + e.value_;
 }
 
 class Budget {
