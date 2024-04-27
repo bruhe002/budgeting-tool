@@ -61,6 +61,7 @@ private:
             // Handle errors later
         } else {
             file << exp;
+            file.close();  // Close file
         }
     }
 
