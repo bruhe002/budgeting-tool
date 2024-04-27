@@ -36,7 +36,7 @@ public:
     ~Budget();
 
 private:
-    string username_;
+    const string username_;
     float profit_;
 };
 }  // namespace budget
