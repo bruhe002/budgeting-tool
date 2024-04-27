@@ -27,8 +27,9 @@ public:
     Budget(const string& user);
 
     void addExpense(const Expense& exp);
-    void deleteExpense(string& name);
+    void deleteExpense(const string& name);
     void saveToFile() const;
+    float sumUpExpenses();
     void setProfit(float value);
     float getProfit() const;
     string displayBudget() const;
@@ -36,6 +37,13 @@ public:
     ~Budget();
 
 private:
+    /**
+     * Saves an Expense to a csv file once created, acting as our
+     * database for saved budgets
+    */
+    void saveExpenseToFile(const Expense& exp) {
+        // pass
+    }
     const string username_;
     float profit_;
 };
