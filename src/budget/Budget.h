@@ -26,7 +26,7 @@ struct Expense {
 
 // Overload the << operator
 ostream& operator<<(ostream& os, const Expense& exp) {
-    os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_;
+    os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
     return os;
 }
 
