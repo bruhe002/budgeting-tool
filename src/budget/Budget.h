@@ -23,12 +23,17 @@ struct Expense {
 
 class Budget {
 public:
+    Budget();
+    Budget(const string& user);
+
     void addExpense(const Expense& exp);
     void deleteExpense(string& name);
     void saveToFile() const;
     void setProfit(float value);
     float getProfit() const;
     string displayBudget() const;
+
+    ~Budget();
 
 private:
     string username_;
