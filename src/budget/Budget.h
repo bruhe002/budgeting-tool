@@ -10,16 +10,25 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <fstream>
+#include <ctime>
 
 using namespace std;
 namespace budget {
 
 struct Expense {
     string name_;
+    float value_;
     bool fixed_;
     bool income_;
-    float value_;
 };
+
+// Overload the << operator
+ostream& operator<<(ostream& os, const Expense& exp) {
+    os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_;
+    return os;
+}
 
 class Budget {
 public:
@@ -42,10 +51,26 @@ private:
      * database for saved budgets
     */
     void saveExpenseToFile(const Expense& exp) {
-        // pass
+        // open file with username
+        string filename = username_ + "_expense_storage.csv";
+        ofstream file;
+        file.open(filename, ios::app);
+
+        // check if open
+        if(!file) {
+            // Handle errors later
+        } else {
+            file << exp;
+        }
     }
+
     const string username_;
     float profit_;
+
+    vector<Expense> fixed_income_;
+    vector<Expense> one_time_income_;
+    vector<Expense> fixed_cost_;
+    vector<Expense> one_time_cost_;
 };
 }  // namespace budget
 
