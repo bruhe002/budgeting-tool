@@ -12,17 +12,27 @@ namespace budget {
 /**
  * Default Constructor
 */
-Budget::Budget() {
-    // pass
-}
+Budget::Budget() 
+    : username_(""),
+      profit_(0.0),
+      fixed_income_(),
+      one_time_income_(),
+      fixed_cost_(),
+      one_time_cost_()
+{}
 
 /**
  * Overload Constructor
  * @param user The username to identify the budget
 */
-Budget::Budget(const string& user) {
-    // pass
-}
+Budget::Budget(const string& user) 
+    : username_(user),
+      profit_(0.0),
+      fixed_income_(),
+      one_time_income_(),
+      fixed_cost_(),
+      one_time_cost_()
+{}
 
 /**
  * Default Destructor
@@ -34,7 +44,21 @@ Budget::~Budget() {}
  * @param exp The expense to be added
 */
 void Budget::addExpense(const Expense& exp) {
-    // pass
+    // We need to see what type of Expense it is
+    // fixed, income etc
+    if(exp.fixed_ && exp.income_) {
+        fixed_income_.push_back(exp);
+    } else if(!exp.fixed_ && exp.income_) {
+        one_time_income_.push_back(exp);
+    } else if(exp.fixed_ && !exp.income_) {
+        fixed_cost_.push_back(exp);
+    } else {  // !exp.fixed_ && !exp.income_
+        one_time_cost_.push_back(exp);
+    }
+
+    // After the expense is added to the appropriate vector
+    // save it to storage file
+    saveExpenseToFile(exp);
 }
 
 /**
