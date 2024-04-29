@@ -7,7 +7,21 @@
 
 #include "Budget.h"
 
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <iomanip>
+
+#include <conio.h>
+
+
 namespace budget {
+const int COLUMN_WIDTH = 25;
+
+ostream& operator<<(ostream& os, const Expense& exp) {
+    os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
+    return os;
+}
 
 /**
  * Default Constructor
@@ -90,19 +104,19 @@ float Budget::sumUpExpenses() {
     float otc_sum = 0.0;  // one-time-cost sum
 
     for(auto e : fixed_income_) {
-        fi_sum = fi_sum + e; 
+        fi_sum = e + fi_sum; 
     }
 
     for(auto e : one_time_income_) {
-        oti_sum = oti_sum + e;
+        oti_sum = e + oti_sum;
     }
 
     for(auto e : fixed_cost_) {
-        fc_sum = fc_sum + e;
+        fc_sum = e + fc_sum;
     }
 
     for(auto e : one_time_cost_) {
-        otc_sum = otc_sum + e;
+        otc_sum = e + otc_sum;
     }
 
     return fi_sum + oti_sum - fc_sum - otc_sum;
@@ -129,8 +143,53 @@ float Budget::getProfit() const {
  * The string display of the entire budget to be displayed to
  * the user as well as be saved to the file
 */
-string Budget::displayBudget() const {
-    // pass
+void Budget::displayBudget() const {
+    // Create an string stream
+    stringstream ss;
+
+    // Clear terminal
+    system("cls");
+
+    // Print the Budget headers
+    // printf("%25s%25s%25s%25s", "Fixed Income", "Fixed Costs", "OT Income", "OT Costs");
+    ss << setw(COLUMN_WIDTH) << left << "Fixed Income";
+    ss << setw(COLUMN_WIDTH) << left << "Fixed Costs";
+    ss << setw(COLUMN_WIDTH) << left << "OT Costs";
+    ss << setw(COLUMN_WIDTH) << left << "OT Income";
+
+    ss << endl;
+    ss << string(COLUMN_WIDTH-2, '=') << "  "
+       << string(COLUMN_WIDTH-2, '=') << "  "
+       << string(COLUMN_WIDTH-2, '=') << "  "
+       << string(COLUMN_WIDTH-2, '=') << "  "; 
+    cout << ss.str();
+
+    // Print the Expenses in the vector
+    for(int line = 0; 
+        line < fixed_income_.size() || 
+        line < one_time_income_.size() ||
+        line < fixed_cost_.size() ||
+        line < one_time_cost_.size(); line++)
+    {
+        
+    }
+
+}
+
+void Budget::saveExpenseToFile(const Expense& exp) {
+    // open file with username
+    string filename = username_ + "_expense_storage.csv";
+    ofstream file;
+    stringstream str;
+    file.open(filename, ios::app);
+
+    // check if open
+    if(!file) {
+        // Handle errors later
+    } else {
+        file << exp;
+        file.close();  // Close file
+    }
 }
 
 }  // namespace budget
