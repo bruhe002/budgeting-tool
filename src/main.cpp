@@ -14,6 +14,9 @@ using namespace budget;
 
 int main() {
 
+    Budget b;
+
+    b.displayBudget();
 
     return 0;
 }
