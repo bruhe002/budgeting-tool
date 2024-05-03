@@ -16,7 +16,7 @@
 
 
 namespace budget {
-const int COLUMN_WIDTH = 27;
+const int COLUMN_WIDTH = 30;
 
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
@@ -153,15 +153,18 @@ void Budget::displayBudget() const {
     // Print the Budget headers
     // printf("%25s%25s%25s%25s", "Fixed Income", "Fixed Costs", "OT Income", "OT Costs");
     ss << setw(COLUMN_WIDTH) << left << "Fixed Income";
+    ss << "  ";
     ss << setw(COLUMN_WIDTH) << left << "Fixed Costs";
+    ss << "  ";
     ss << setw(COLUMN_WIDTH) << left << "OT Costs";
+    ss << "  ";
     ss << setw(COLUMN_WIDTH) << left << "OT Income";
 
     ss << endl;
-    ss << string(COLUMN_WIDTH-2, '=') << "  "
-       << string(COLUMN_WIDTH-2, '=') << "  "
-       << string(COLUMN_WIDTH-2, '=') << "  "
-       << string(COLUMN_WIDTH-2, '=') << "  "; 
+    ss << string(COLUMN_WIDTH, '=') << "  "
+       << string(COLUMN_WIDTH, '=') << "  "
+       << string(COLUMN_WIDTH, '=') << "  "
+       << string(COLUMN_WIDTH, '=') << "  "; 
     // cout << ss.str();
     ss << "\n";
 
@@ -175,53 +178,48 @@ void Budget::displayBudget() const {
         // Check if there's fixed income to print
         stringstream exp_str;
         if(line < fixed_income_.size()) {
-            exp_str << fixed_income_[line].name_ 
-                    << " $" << fixed << setprecision(2) << fixed_income_[line].value_;
-            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
-            exp_str.str("");
+            ss << setw(COLUMN_WIDTH/2) << left << fixed_income_[line].name_ 
+                << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
+                << fixed_income_[line].value_ << "  ";
         }
         else {
-            ss << setw(COLUMN_WIDTH) << " ";
+            ss << setw(COLUMN_WIDTH+2) << "  ";
         }
 
         // Check if there's fixed costs to print
         if(line < fixed_cost_.size()) {
-            exp_str << fixed_cost_[line].name_ 
-                    << " $" << fixed << setprecision(2) << fixed_cost_[line].value_;
-            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
-            exp_str.str("");
+            ss << setw(COLUMN_WIDTH/2) << left << fixed_cost_[line].name_ 
+                << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
+                << fixed_cost_[line].value_ << "  ";
         }
         else {
-            ss << setw(COLUMN_WIDTH) << " ";
+            ss << setw(COLUMN_WIDTH+2) << "  ";
         }
 
         // Check if there's a one-time cost to print
         if(line < one_time_cost_.size()) {
-            exp_str << one_time_cost_[line].name_ 
-                    << " $" << fixed << setprecision(2) << one_time_cost_[line].value_;
-            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
-            exp_str.str("");
+            ss << setw(COLUMN_WIDTH/2) << left << one_time_cost_[line].name_ 
+                << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
+                << one_time_cost_[line].value_ << "  ";
         }
         else {
-            ss << setw(COLUMN_WIDTH) << " ";
+            ss << setw(COLUMN_WIDTH+2) << "  ";
         }
 
         // Check if there's one time income to print
         if(line < one_time_income_.size()) {
-            exp_str << one_time_income_[line].name_ 
-                    << " $" << fixed << setprecision(2) << one_time_income_[line].value_;
-            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
-
-            exp_str.str("");
+            ss << setw(COLUMN_WIDTH/2) << left << one_time_income_[line].name_ 
+                << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
+                << one_time_income_[line].value_ << "  ";
         }
         else {
-            ss << setw(COLUMN_WIDTH) << " ";
+            ss << setw(COLUMN_WIDTH+2) << "  ";
         }
 
         ss << "\n";
     }
 
-    ss << string(COLUMN_WIDTH*4, '-') << " ";
+    ss << string(COLUMN_WIDTH*4, '-') << "  ";
     ss << "\n";
 
     stringstream total;
