@@ -162,7 +162,8 @@ void Budget::displayBudget() const {
        << string(COLUMN_WIDTH-2, '=') << "  "
        << string(COLUMN_WIDTH-2, '=') << "  "
        << string(COLUMN_WIDTH-2, '=') << "  "; 
-    cout << ss.str();
+    // cout << ss.str();
+    ss << "\n";
 
     // Print the Expenses in the vector
     for(int line = 0; 
@@ -171,8 +172,46 @@ void Budget::displayBudget() const {
         line < fixed_cost_.size() ||
         line < one_time_cost_.size(); line++)
     {
-        
+        // Check if there's fixed income to print
+        if(line < fixed_income_.size()) {
+            ss << setw(COLUMN_WIDTH) << left << fixed_income_[line].name_ << " $" << setprecision(2) << fixed_income_[line].value_;
+        }
+        else {
+            ss << setw(COLUMN_WIDTH) << " ";
+        }
+
+        // Check if there's fixed costs to print
+        if(line < fixed_cost_.size()) {
+            ss << setw(COLUMN_WIDTH) << left << fixed_cost_[line].name_ << " $" << setprecision(2) << fixed_cost_[line].value_;
+        }
+        else {
+            ss << setw(COLUMN_WIDTH) << " ";
+        }
+
+        // Check if there's a one-time cost to print
+        if(line < one_time_cost_.size()) {
+            ss << setw(COLUMN_WIDTH) << left << one_time_cost_[line].name_ << " $" << setprecision(2) << one_time_cost_[line].value_;
+        }
+        else {
+            ss << setw(COLUMN_WIDTH) << " ";
+        }
+
+        // Check if there's one time income to print
+        if(line < one_time_income_.size()) {
+            ss << setw(COLUMN_WIDTH) << left << one_time_income_[line].name_ << " $" << setprecision(2) << one_time_income_[line].value_;
+        }
+        else {
+            ss << setw(COLUMN_WIDTH) << " ";
+        }
+
+        ss << "\n";
     }
+
+    ss << string(COLUMN_WIDTH*4, '-') << " ";
+    ss << setw(COLUMN_WIDTH*4) << left << "Total: $" << setprecision(2) << profit_;
+    ss << "\n";
+
+    cout << ss.str();
 
 }
 
