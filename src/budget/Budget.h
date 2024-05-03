@@ -43,7 +43,7 @@ public:
     void addExpense(const Expense& exp);
     void deleteExpense(const string& name);
     void saveToFile() const;
-    float sumUpExpenses();
+    float sumUpExpenses() const;
     void setProfit(float value);
     float getProfit() const;
     void displayBudget() const;

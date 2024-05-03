@@ -96,7 +96,7 @@ void Budget::saveToFile() const {
  * Sums up all expenses in the budget
  * @return The total sum of the expenses
 */
-float Budget::sumUpExpenses() {
+float Budget::sumUpExpenses() const {
     // Sum up all for vector expenses
     float fi_sum = 0.0;  // fixed-income sum
     float oti_sum = 0.0;  // one-time-income sum
@@ -173,8 +173,12 @@ void Budget::displayBudget() const {
         line < one_time_cost_.size(); line++)
     {
         // Check if there's fixed income to print
+        stringstream exp_str;
         if(line < fixed_income_.size()) {
-            ss << setw(COLUMN_WIDTH-2) << left << fixed_income_[line].name_ << " $" << setprecision(2) << fixed_income_[line].value_;
+            exp_str << fixed_income_[line].name_ 
+                    << " $" << fixed << setprecision(2) << fixed_income_[line].value_;
+            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
+            exp_str.str("");
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -182,7 +186,10 @@ void Budget::displayBudget() const {
 
         // Check if there's fixed costs to print
         if(line < fixed_cost_.size()) {
-            ss << setw(COLUMN_WIDTH-2) << left << fixed_cost_[line].name_ << " $" << setprecision(2) << fixed_cost_[line].value_;
+            exp_str << fixed_cost_[line].name_ 
+                    << " $" << fixed << setprecision(2) << fixed_cost_[line].value_;
+            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
+            exp_str.str("");
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -190,7 +197,10 @@ void Budget::displayBudget() const {
 
         // Check if there's a one-time cost to print
         if(line < one_time_cost_.size()) {
-            ss << setw(COLUMN_WIDTH-2) << left << one_time_cost_[line].name_ << " $" << setprecision(2) << one_time_cost_[line].value_;
+            exp_str << one_time_cost_[line].name_ 
+                    << " $" << fixed << setprecision(2) << one_time_cost_[line].value_;
+            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
+            exp_str.str("");
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -198,7 +208,11 @@ void Budget::displayBudget() const {
 
         // Check if there's one time income to print
         if(line < one_time_income_.size()) {
-            ss << setw(COLUMN_WIDTH-2) << left << one_time_income_[line].name_ << " $" << setprecision(2) << one_time_income_[line].value_;
+            exp_str << one_time_income_[line].name_ 
+                    << " $" << fixed << setprecision(2) << one_time_income_[line].value_;
+            ss << setw(COLUMN_WIDTH) << left << exp_str.str();
+
+            exp_str.str("");
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -209,8 +223,9 @@ void Budget::displayBudget() const {
 
     ss << string(COLUMN_WIDTH*4, '-') << " ";
     ss << "\n";
+
     stringstream total;
-    total << "Total: $" << fixed << setprecision(2) << profit_;
+    total << "Total: $" << fixed << setprecision(2) << sumUpExpenses();
     ss << setw(COLUMN_WIDTH*4) << right << total.str();
     ss << "\n";
 
