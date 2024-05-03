@@ -16,7 +16,7 @@
 
 
 namespace budget {
-const int COLUMN_WIDTH = 25;
+const int COLUMN_WIDTH = 27;
 
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
@@ -72,7 +72,7 @@ void Budget::addExpense(const Expense& exp) {
 
     // After the expense is added to the appropriate vector
     // save it to storage file
-    saveExpenseToFile(exp);
+    // saveExpenseToFile(exp);
 
     // Display updated list to the UI (todo)
 }
@@ -174,7 +174,7 @@ void Budget::displayBudget() const {
     {
         // Check if there's fixed income to print
         if(line < fixed_income_.size()) {
-            ss << setw(COLUMN_WIDTH) << left << fixed_income_[line].name_ << " $" << setprecision(2) << fixed_income_[line].value_;
+            ss << setw(COLUMN_WIDTH-2) << left << fixed_income_[line].name_ << " $" << setprecision(2) << fixed_income_[line].value_;
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -182,7 +182,7 @@ void Budget::displayBudget() const {
 
         // Check if there's fixed costs to print
         if(line < fixed_cost_.size()) {
-            ss << setw(COLUMN_WIDTH) << left << fixed_cost_[line].name_ << " $" << setprecision(2) << fixed_cost_[line].value_;
+            ss << setw(COLUMN_WIDTH-2) << left << fixed_cost_[line].name_ << " $" << setprecision(2) << fixed_cost_[line].value_;
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -190,7 +190,7 @@ void Budget::displayBudget() const {
 
         // Check if there's a one-time cost to print
         if(line < one_time_cost_.size()) {
-            ss << setw(COLUMN_WIDTH) << left << one_time_cost_[line].name_ << " $" << setprecision(2) << one_time_cost_[line].value_;
+            ss << setw(COLUMN_WIDTH-2) << left << one_time_cost_[line].name_ << " $" << setprecision(2) << one_time_cost_[line].value_;
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -198,7 +198,7 @@ void Budget::displayBudget() const {
 
         // Check if there's one time income to print
         if(line < one_time_income_.size()) {
-            ss << setw(COLUMN_WIDTH) << left << one_time_income_[line].name_ << " $" << setprecision(2) << one_time_income_[line].value_;
+            ss << setw(COLUMN_WIDTH-2) << left << one_time_income_[line].name_ << " $" << setprecision(2) << one_time_income_[line].value_;
         }
         else {
             ss << setw(COLUMN_WIDTH) << " ";
@@ -208,7 +208,10 @@ void Budget::displayBudget() const {
     }
 
     ss << string(COLUMN_WIDTH*4, '-') << " ";
-    ss << setw(COLUMN_WIDTH*4) << left << "Total: $" << setprecision(2) << profit_;
+    ss << "\n";
+    stringstream total;
+    total << "Total: $" << fixed << setprecision(2) << profit_;
+    ss << setw(COLUMN_WIDTH*4) << right << total.str();
     ss << "\n";
 
     cout << ss.str();
