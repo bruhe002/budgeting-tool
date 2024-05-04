@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 #include <ctime>
 
@@ -33,7 +34,12 @@ struct Expense {
     }
 };
 
-
+enum CostType : uint8_t {
+    FIXED_I = 0,
+    FIXED_C,
+    ONE_TIME_C,
+    ONE_TIME_I
+};
 
 class Budget {
 public:
