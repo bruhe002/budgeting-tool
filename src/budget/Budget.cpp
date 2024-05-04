@@ -17,6 +17,8 @@
 
 namespace budget {
 const int COLUMN_WIDTH = 30;
+const string COLUMN_SPACE = "  ";
+const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
 
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
@@ -161,10 +163,10 @@ void Budget::displayBudget() const {
     ss << setw(COLUMN_WIDTH) << left << "OT Income";
 
     ss << endl;
-    ss << string(COLUMN_WIDTH, '=') << "  "
-       << string(COLUMN_WIDTH, '=') << "  "
-       << string(COLUMN_WIDTH, '=') << "  "
-       << string(COLUMN_WIDTH, '=') << "  "; 
+    ss << string(COLUMN_WIDTH, '=') << COLUMN_SPACE
+       << string(COLUMN_WIDTH, '=') << COLUMN_SPACE
+       << string(COLUMN_WIDTH, '=') << COLUMN_SPACE
+       << string(COLUMN_WIDTH, '=') << COLUMN_SPACE; 
     // cout << ss.str();
     ss << "\n";
 
@@ -180,51 +182,51 @@ void Budget::displayBudget() const {
         if(line < fixed_income_.size()) {
             ss << setw(COLUMN_WIDTH/2) << left << fixed_income_[line].name_ 
                 << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
-                << fixed_income_[line].value_ << "  ";
+                << fixed_income_[line].value_ << COLUMN_SPACE;
         }
         else {
-            ss << setw(COLUMN_WIDTH+2) << "  ";
+            ss << setw(COLUMN_WIDTH+2) << COLUMN_SPACE;
         }
 
         // Check if there's fixed costs to print
         if(line < fixed_cost_.size()) {
             ss << setw(COLUMN_WIDTH/2) << left << fixed_cost_[line].name_ 
                 << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
-                << fixed_cost_[line].value_ << "  ";
+                << fixed_cost_[line].value_ << COLUMN_SPACE;
         }
         else {
-            ss << setw(COLUMN_WIDTH+2) << "  ";
+            ss << setw(COLUMN_WIDTH+2) << COLUMN_SPACE;
         }
 
         // Check if there's a one-time cost to print
         if(line < one_time_cost_.size()) {
             ss << setw(COLUMN_WIDTH/2) << left << one_time_cost_[line].name_ 
                 << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
-                << one_time_cost_[line].value_ << "  ";
+                << one_time_cost_[line].value_ << COLUMN_SPACE;
         }
         else {
-            ss << setw(COLUMN_WIDTH+2) << "  ";
+            ss << setw(COLUMN_WIDTH+2) << COLUMN_SPACE;
         }
 
         // Check if there's one time income to print
         if(line < one_time_income_.size()) {
             ss << setw(COLUMN_WIDTH/2) << left << one_time_income_[line].name_ 
                 << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
-                << one_time_income_[line].value_ << "  ";
+                << one_time_income_[line].value_ << COLUMN_SPACE;
         }
         else {
-            ss << setw(COLUMN_WIDTH+2) << "  ";
+            ss << setw(COLUMN_WIDTH+2) << COLUMN_SPACE;
         }
 
         ss << "\n";
     }
 
-    ss << string(COLUMN_WIDTH*4, '-') << "  ";
+    ss << string(DISPLAY_WIDTH, '-');
     ss << "\n";
 
     stringstream total;
     total << "Total: $" << fixed << setprecision(2) << sumUpExpenses();
-    ss << setw(COLUMN_WIDTH*4) << right << total.str();
+    ss << setw(DISPLAY_WIDTH) << right << total.str();
     ss << "\n";
 
     cout << ss.str();
