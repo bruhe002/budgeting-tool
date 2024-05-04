@@ -41,6 +41,7 @@ public:
     Budget(const string& user);
 
     void addExpense(const Expense& exp);
+    string getStoreName();
     void deleteExpense(const string& name);
     void saveToFile() const;
     float sumUpExpenses() const;
