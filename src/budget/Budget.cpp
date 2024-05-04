@@ -19,6 +19,7 @@ namespace budget {
 const int COLUMN_WIDTH = 30;
 const string COLUMN_SPACE = "  ";
 const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
+const string EXPENSE_STORAGE = "expense_store/";
 
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
@@ -48,7 +49,22 @@ Budget::Budget(const string& user)
       one_time_income_(),
       fixed_cost_(),
       one_time_cost_()
-{}
+{
+    // Create a file with the name
+    fstream file;
+
+    file.open(getStoreName(), fstream::in);
+
+    if(!file) {
+        // File Doesn't exist
+        file.open(getStoreName(), fstream::out);
+        file << "Name,value,fixed,income\n";
+
+    } else {
+        
+    }
+
+}
 
 /**
  * Default Destructor
@@ -77,6 +93,10 @@ void Budget::addExpense(const Expense& exp) {
     // saveExpenseToFile(exp);
 
     // Display updated list to the UI (todo)
+}
+
+string Budget::getStoreName() {
+    return username_ + "_expense_store.csv";
 }
 
 /**
@@ -167,7 +187,7 @@ void Budget::displayBudget() const {
        << string(COLUMN_WIDTH, '=') << COLUMN_SPACE
        << string(COLUMN_WIDTH, '=') << COLUMN_SPACE
        << string(COLUMN_WIDTH, '=') << COLUMN_SPACE; 
-    // cout << ss.str();
+
     ss << "\n";
 
     // Print the Expenses in the vector
@@ -178,7 +198,6 @@ void Budget::displayBudget() const {
         line < one_time_cost_.size(); line++)
     {
         // Check if there's fixed income to print
-        stringstream exp_str;
         if(line < fixed_income_.size()) {
             ss << setw(COLUMN_WIDTH/2) << left << fixed_income_[line].name_ 
                 << setw((COLUMN_WIDTH/2)) << right << fixed << setprecision(2) 
@@ -229,16 +248,16 @@ void Budget::displayBudget() const {
     ss << setw(DISPLAY_WIDTH) << right << total.str();
     ss << "\n";
 
+    // Displays Budget to UI
     cout << ss.str();
 
 }
 
 void Budget::saveExpenseToFile(const Expense& exp) {
     // open file with username
-    string filename = username_ + "_expense_storage.csv";
     ofstream file;
     stringstream str;
-    file.open(filename, ios::app);
+    file.open(getStoreName(), ios::app);
 
     // check if open
     if(!file) {
