@@ -51,17 +51,20 @@ Budget::Budget(const string& user)
       one_time_cost_()
 {
     // Create a file with the name
-    fstream file;
-
-    file.open(getStoreName(), fstream::in);
+    string filename = getStoreName();
+    FILE* file = fopen(filename.c_str(), "r");
 
     if(!file) {
         // File Doesn't exist
-        file.open(getStoreName(), fstream::out);
-        file << "Name,value,fixed,income\n";
+        file = fopen(filename.c_str(), "w");
+        fprintf(file, "Name,value,fixed,income\n");
 
     } else {
-        
+        char* name, fixed, income;
+        float value; 
+        while(fscanf(file, "%[^,]%f%[^,]%[^,]", name, value, fixed, income)) {
+            
+        }
     }
 
 }
