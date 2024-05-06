@@ -57,7 +57,7 @@ Budget::Budget(const string& user)
     if(!file) {
         // File Doesn't exist
         file = fopen(filename.c_str(), "w");
-        fprintf(file, "Name,value,fixed,income\n");
+        fprintf(file, "Name,value,costtype\n");
 
     } else {
         char* name;
@@ -88,6 +88,7 @@ void Budget::addExpense(const Expense& exp) {
 
     // After the expense is added to the appropriate vector
     // save it to storage file
+    // Need to check if the expense exists
     // saveExpenseToFile(exp);
 
     // Display updated list to the UI (todo)
