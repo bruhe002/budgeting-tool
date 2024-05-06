@@ -68,6 +68,8 @@ Budget::Budget(const string& user)
         }
     }
 
+    fclose(file);
+
 }
 
 /**
