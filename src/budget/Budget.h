@@ -63,6 +63,8 @@ private:
     */
     void saveExpenseToFile(const Expense& exp);
 
+    void addExpenseToBudget(const Expense& exp);
+
     const string username_;
     float profit_;
 
