@@ -15,13 +15,13 @@ using namespace budget;
 int main() {
 
     Budget b;
-    Expense rent{"Rent", 1885.00, true, false};
-    Expense car{"Car", 300.07, true, false};
-    Expense car_in{"car_insurance", 134.21, true, false};
-    Expense income{"paycheck", 4710.00, true, true};
-    Expense food{"chick-fil-a", 25.04, false, false};
-    Expense bday{"Birthday Money", 200.00, false, true};
-    Expense netflix{"Netflix", 15.99, true, false};
+    Expense rent{"Rent", 1885.00, FIXED_C};
+    Expense car{"Car", 300.07, FIXED_C};
+    Expense car_in{"car_insurance", 134.21, FIXED_C};
+    Expense income{"paycheck", 4710.00, FIXED_I};
+    Expense food{"chick-fil-a", 25.04, ONE_TIME_C};
+    Expense bday{"Birthday Money", 200.00, ONE_TIME_I};
+    Expense netflix{"Netflix", 15.99, ONE_TIME_C};
 
     b.addExpense(rent);
     b.addExpense(car);

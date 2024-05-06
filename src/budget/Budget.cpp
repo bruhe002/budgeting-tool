@@ -22,7 +22,7 @@ const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
 const string EXPENSE_STORAGE = "expense_store/";
 
 ostream& operator<<(ostream& os, const Expense& exp) {
-    os << exp.name_ << "," << exp.value_ << "," << exp.fixed_ << "," << exp.income_ << "\n";
+    os << exp.name_ << "," << exp.value_ << "," << exp.type_ << "\n";
     return os;
 }
 
@@ -60,10 +60,20 @@ Budget::Budget(const string& user)
         fprintf(file, "Name,value,fixed,income\n");
 
     } else {
-        char* name, fixed, income;
+        char* name;
+        uint32_t type;
         float value; 
-        while(fscanf(file, "%[^,]%f%[^,]%[^,]", name, value, fixed, income)) {
-            
+        while(fscanf(file, "%[^,]%f%i", name, value, type)) {
+            switch(type) {
+                case FIXED_I:
+                    break;
+                case FIXED_C:
+                    break;
+                case ONE_TIME_C:
+                    break;
+                case ONE_TIME_I:
+                    break;
+            }
         }
     }
 
@@ -81,14 +91,19 @@ Budget::~Budget() {}
 void Budget::addExpense(const Expense& exp) {
     // We need to see what type of Expense it is
     // fixed, income etc
-    if(exp.fixed_ && exp.income_) {
-        fixed_income_.push_back(exp);
-    } else if(!exp.fixed_ && exp.income_) {
-        one_time_income_.push_back(exp);
-    } else if(exp.fixed_ && !exp.income_) {
-        fixed_cost_.push_back(exp);
-    } else {  // !exp.fixed_ && !exp.income_
-        one_time_cost_.push_back(exp);
+    switch(exp.type_) {
+        case FIXED_I:
+            fixed_income_.push_back(exp);
+            break;
+        case FIXED_C:
+            fixed_cost_.push_back(exp);
+            break;
+        case ONE_TIME_C:
+            one_time_cost_.push_back(exp);
+            break;
+        case ONE_TIME_I:
+            one_time_income_.push_back(exp);
+            break;
     }
 
     // After the expense is added to the appropriate vector

@@ -19,11 +19,17 @@
 using namespace std;
 namespace budget {
 
+enum CostType : uint32_t {
+    FIXED_I = 0,
+    FIXED_C,
+    ONE_TIME_C,
+    ONE_TIME_I
+};
+
 struct Expense {
     string name_;
     float value_;
-    bool fixed_;
-    bool income_;
+    CostType type_;
 
     float operator+(const Expense& exp) {
         return this->value_ + exp.value_;
@@ -32,13 +38,6 @@ struct Expense {
     float operator+(float f) {
         return f + value_;
     }
-};
-
-enum CostType : uint8_t {
-    FIXED_I = 0,
-    FIXED_C,
-    ONE_TIME_C,
-    ONE_TIME_I
 };
 
 class Budget {
