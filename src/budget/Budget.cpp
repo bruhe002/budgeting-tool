@@ -61,19 +61,10 @@ Budget::Budget(const string& user)
 
     } else {
         char* name;
-        uint32_t type;
+        CostType type;
         float value; 
         while(fscanf(file, "%[^,]%f%i", name, value, type)) {
-            switch(type) {
-                case FIXED_I:
-                    break;
-                case FIXED_C:
-                    break;
-                case ONE_TIME_C:
-                    break;
-                case ONE_TIME_I:
-                    break;
-            }
+            addExpenseToBudget(Expense{name, value, type});
         }
     }
 
@@ -91,20 +82,7 @@ Budget::~Budget() {}
 void Budget::addExpense(const Expense& exp) {
     // We need to see what type of Expense it is
     // fixed, income etc
-    switch(exp.type_) {
-        case FIXED_I:
-            fixed_income_.push_back(exp);
-            break;
-        case FIXED_C:
-            fixed_cost_.push_back(exp);
-            break;
-        case ONE_TIME_C:
-            one_time_cost_.push_back(exp);
-            break;
-        case ONE_TIME_I:
-            one_time_income_.push_back(exp);
-            break;
-    }
+    addExpenseToBudget(exp);
 
     // After the expense is added to the appropriate vector
     // save it to storage file

@@ -63,7 +63,22 @@ private:
     */
     void saveExpenseToFile(const Expense& exp);
 
-    void addExpenseToBudget(const Expense& exp);
+    void addExpenseToBudget(const Expense& exp) {
+        switch(exp.type_) {
+            case FIXED_I:
+                fixed_income_.push_back(exp);
+                break;
+            case FIXED_C:
+                fixed_cost_.push_back(exp);
+                break;
+            case ONE_TIME_C:
+                one_time_cost_.push_back(exp);
+                break;
+            case ONE_TIME_I:
+                one_time_income_.push_back(exp);
+                break;
+        }
+    }
 
     const string username_;
     float profit_;
