@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////
 
 #include "budget/Budget.h"
+#include "except/InvalidOptionException.h"
 
 #include <iostream>
 #include <exception>
@@ -71,7 +72,7 @@ int main() {
         if(budget_choice.size() != 1) {
             cerr << "Invalid Option. Please try again." << endl;
         } else {
-            char letter = toupper(budget_choice[0]);
+            char letter = static_cast<char>(toupper(budget_choice[0]) );
             switch(letter) {
                 case 'A':
                     // Run an add function
@@ -158,8 +159,8 @@ void addExpenseMenu(Budget& budget) {
         cout << "\t4. One-time Income\n";
         try {
             cin >> type;
-            if (type < 1 || type > 5) {
-                throw;
+            if (type < 1 || type > 4) {
+                throw except::InvalidOptionException();
             }
 
             switch(type) {
@@ -179,7 +180,7 @@ void addExpenseMenu(Budget& budget) {
 
             type_flag = false;
         } catch(exception& e) {
-            cerr << "Invalid Option. Please try again!\n";
+            cerr << e.what() << endl;
         }
     }
 }
@@ -212,11 +213,11 @@ void deleteExpenseMenu(Budget& budget) {
                 case 5:
                     break;
                 default:
-                    throw;
+                    throw except::InvalidOptionException();
             }
             quit = true;
         } catch(exception& e) {
-            cerr << "Invalid choice! Please try again...\n";
+            cerr << e.what() << endl;
         }
     }
 }

@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////
 
 #include "Budget.h"
+#include "except/InvalidOptionException.h"
 
 #include <fstream>
 #include <sstream>
@@ -52,24 +53,24 @@ Budget::Budget(const string& user)
       one_time_cost_()
 {
     // Create a file with the name
-    string filename = getStoreName();
-    FILE* file = fopen(filename.c_str(), "r");
+    // string filename = getStoreName();
+    // FILE* file = fopen(filename.c_str(), "r");
 
-    if(!file) {
-        // File Doesn't exist
-        file = fopen(filename.c_str(), "w");
-        fprintf(file, "Name,value,costtype\n");
+    // if(!file) {
+    //     // File Doesn't exist
+    //     file = fopen(filename.c_str(), "w");
+    //     fprintf(file, "Name,value,costtype\n");
 
-    } else {
-        char* name;
-        CostType type;
-        float value; 
-        while(fscanf(file, "%[^,]%f%i", name, value, type)) {
-            addExpenseToBudget(Expense{name, value, type});
-        }
-    }
+    // } else {
+    //     char* name = "";
+    //     CostType type = FIXED_I;
+    //     float value = 0.0; 
+    //     while(fscanf(file, "%[^,]%f%i", name, value, (int)type)) {
+    //         addExpenseToBudget(Expense{name, value, type});
+    //     }
+    // }
 
-    fclose(file);
+    // fclose(file);
 
 }
 
@@ -125,16 +126,19 @@ void Budget::deleteExpense(const CostType& type) {
     }
 
     uint32_t choice = 0;
-    while(choice > list.size() || !choice) {
+    bool choice_flag = true;
+    while(choice_flag) {
         try {
             cin >> choice;
-            if (--choice >= list.size()) {
-                throw;
+            --choice;
+            if (choice >= list.size()) {
+                throw except::InvalidOptionException();
             } else {
                 list.erase(list.begin() + choice);
+                choice_flag = false;
             }
         } catch (exception& e) {
-            cerr << "Invalid choice. Please try again!\n";
+            cerr << e.what() << endl;
         }
     }
 
