@@ -15,6 +15,7 @@ using namespace budget;
 
 bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
+void deleteExpenseMenu(Budget& budget);
 
 int main() {
     // string user = "";
@@ -77,6 +78,7 @@ int main() {
                     addExpenseMenu(b);
                     break;
                 case 'D':
+                    deleteExpenseMenu(b);
                     break;
                 case 'E':
                     budget_choice = letter;
@@ -179,5 +181,17 @@ void addExpenseMenu(Budget& budget) {
         } catch(exception& e) {
             cerr << "Invalid Option. Please try again!\n";
         }
+    }
+}
+
+void deleteExpenseMenu(Budget& budget) {
+    int choice = 0;
+    while(choice != 5) {
+        cout << "Which Type of Expense to delete?\n"
+                "\t1. Fixed Income\n"
+                "\t2. Fixed Costs\n"
+                "\t3. One-Time Costs\n"
+                "\t4. One-Time Income\n"
+                "\t5. Quit\n";
     }
 }
