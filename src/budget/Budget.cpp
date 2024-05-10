@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////
 
 #include "Budget.h"
-#include "except/InvalidOptionException.h"
+#include "../except/InvalidOptionException.h"
 
 #include <fstream>
 #include <sstream>
