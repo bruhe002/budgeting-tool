@@ -128,7 +128,7 @@ void Budget::deleteExpense(const CostType& type) {
     while(choice > list.size() || !choice) {
         try {
             cin >> choice;
-            if (--choice > list.size()) {
+            if (--choice >= list.size()) {
                 throw;
             } else {
                 list.erase(list.begin() + choice);
