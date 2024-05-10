@@ -193,5 +193,24 @@ void deleteExpenseMenu(Budget& budget) {
                 "\t3. One-Time Costs\n"
                 "\t4. One-Time Income\n"
                 "\t5. Quit\n";
+        try {
+            cin >> choice;
+            switch(choice) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                default:
+                    throw;
+            }
+        } catch(exception& e) {
+            cerr << "Invalid choice! Please try again...\n";
+        }
     }
 }
