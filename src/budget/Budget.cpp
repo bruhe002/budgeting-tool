@@ -119,15 +119,14 @@ void Budget::deleteExpense(const CostType& type) {
             break;
     }
 
-    cout << "Choose an expense to delete: \n";
-
-    for(int i = 0; i < list.size(); i++) {
-        cout << "\t" << i+1 << ". " << list[i];
-    }
-
     uint32_t choice = 0;
     bool choice_flag = true;
     while(choice_flag) {
+        cout << "Choose an expense to delete: \n";
+
+        for(int i = 0; i < list.size(); i++) {
+            cout << "\t" << i+1 << ". " << list[i];
+        }
         try {
             cin >> choice;
             --choice;
