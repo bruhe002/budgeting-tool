@@ -197,12 +197,16 @@ void deleteExpenseMenu(Budget& budget) {
             cin >> choice;
             switch(choice) {
                 case 1:
+                    budget.deleteExpense(FIXED_I);
                     break;
                 case 2:
+                    budget.deleteExpense(FIXED_C);
                     break;
                 case 3:
+                    budget.deleteExpense(ONE_TIME_C);
                     break;
                 case 4:
+                    budget.deleteExpense(ONE_TIME_I);
                     break;
                 case 5:
                     break;
