@@ -186,7 +186,8 @@ void addExpenseMenu(Budget& budget) {
 
 void deleteExpenseMenu(Budget& budget) {
     int choice = 0;
-    while(choice != 5) {
+    bool quit = false;
+    while(!quit) {
         cout << "Which Type of Expense to delete?\n"
                 "\t1. Fixed Income\n"
                 "\t2. Fixed Costs\n"
@@ -213,6 +214,7 @@ void deleteExpenseMenu(Budget& budget) {
                 default:
                     throw;
             }
+            quit = true;
         } catch(exception& e) {
             cerr << "Invalid choice! Please try again...\n";
         }
