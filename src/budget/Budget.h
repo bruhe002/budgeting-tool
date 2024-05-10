@@ -47,7 +47,7 @@ public:
 
     void addExpense(const Expense& exp);
     string getStoreName();
-    void deleteExpense(const string& name);
+    void deleteExpense(const CostType& type);
     void saveToFile() const;
     float sumUpExpenses() const;
     void setProfit(float value);

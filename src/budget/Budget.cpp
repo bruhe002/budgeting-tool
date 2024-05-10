@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 
 #include <conio.h>
 
@@ -90,8 +91,6 @@ void Budget::addExpense(const Expense& exp) {
     // save it to storage file
     // Need to check if the expense exists
     // saveExpenseToFile(exp);
-
-    // Display updated list to the UI (todo)
 }
 
 string Budget::getStoreName() {
@@ -102,8 +101,61 @@ string Budget::getStoreName() {
  * Deletes an expense from the budget class
  * @name Name of struct to be deleted
 */
-void Budget::deleteExpense(const string& name) {
-    //pass
+void Budget::deleteExpense(const CostType& type) {
+    vector<Expense> list;
+    switch(type) {
+        case FIXED_I:
+            copy(fixed_income_.begin(), fixed_income_.end(), back_inserter(list));
+            break;
+        case FIXED_C:
+            copy(fixed_cost_.begin(), fixed_cost_.end(), back_inserter(list));
+            break;
+        case ONE_TIME_C:
+            copy(one_time_cost_.begin(), one_time_cost_.end(), back_inserter(list));
+            break;
+        case ONE_TIME_I:
+            copy(one_time_income_.begin(), one_time_income_.end(), back_inserter(list));
+            break;
+    }
+
+    cout << "Choose an expense to delete: \n";
+
+    for(int i = 0; i < list.size();) {
+        cout << "\t" << ++i << ". " << list[i];
+    }
+
+    uint32_t choice = 0;
+    while(choice > list.size()) {
+        try {
+            cin >> choice;
+            if (choice > list.size()) {
+                throw;
+            } else {
+                list.erase(list.begin() + choice);
+            }
+        } catch (exception& e) {
+            cerr << "Invalid choice. Please try again!\n";
+        }
+    }
+
+    switch(type) {
+        case FIXED_I:
+            fixed_income_.clear();
+            copy(list.begin(), list.end(), back_inserter(fixed_income_));
+            break;
+        case FIXED_C:
+            fixed_cost_.clear();
+            copy(list.begin(), list.end(), back_inserter(fixed_cost_));
+            break;
+        case ONE_TIME_C:
+            one_time_cost_.clear();
+            copy(list.begin(), list.end(), back_inserter(one_time_cost_));
+            break;
+        case ONE_TIME_I:
+            one_time_income_.clear();
+            copy(list.begin(), list.end(), back_inserter(one_time_income_));
+            break;
+    }
 }
 
 /**
