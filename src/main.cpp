@@ -69,7 +69,6 @@ int main() {
         cout << "Select an option: "
                 "[A]dd expense, [D]elete Expense, [E]xit " << endl;
         getline(cin, budget_choice);
-        cout << endl <<"Budget choice : ." << budget_choice << "." << endl;
         if(budget_choice.size() != 1) {
             cerr << "Invalid Option. Please try again." << endl;
         } else {
