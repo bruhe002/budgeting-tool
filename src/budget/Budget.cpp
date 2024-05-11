@@ -14,7 +14,9 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
+#include <ctime>
 
+#include <sys/stat.h>
 #include <conio.h>
 
 
@@ -33,7 +35,7 @@ ostream& operator<<(ostream& os, const Expense& exp) {
  * Default Constructor
 */
 Budget::Budget() 
-    : username_(""),
+    : username_("bruhe002"),
       profit_(0.0),
       fixed_income_(),
       one_time_income_(),
@@ -53,25 +55,6 @@ Budget::Budget(const string& user)
       fixed_cost_(),
       one_time_cost_()
 {
-    // Create a file with the name
-    // string filename = getStoreName();
-    // FILE* file = fopen(filename.c_str(), "r");
-
-    // if(!file) {
-    //     // File Doesn't exist
-    //     file = fopen(filename.c_str(), "w");
-    //     fprintf(file, "Name,value,costtype\n");
-
-    // } else {
-    //     char* name = "";
-    //     CostType type = FIXED_I;
-    //     float value = 0.0; 
-    //     while(fscanf(file, "%[^,]%f%i", name, value, (int)type)) {
-    //         addExpenseToBudget(Expense{name, value, type});
-    //     }
-    // }
-
-    // fclose(file);
 
 }
 
@@ -168,8 +151,40 @@ void Budget::deleteExpense(const CostType& type) {
 /**
  * Saves Budget to a file
 */
-void Budget::saveToFile() const {
-    // pass
+void Budget::exportToFile() const {
+    // Create the time
+    stringstream time_ss;
+    time_t curr_time;
+    time(&curr_time);
+    time_ss << asctime(localtime(&curr_time));
+    string day;
+    string month;
+    string num_day;
+    string time;
+    string year;
+    time_ss >> day >> month >> num_day >> time >> year;
+
+    string filename = "./store/budgets/" + username_ + "_budget_" + month + "_" + year + ".txt";
+
+    // Check if storage directory exists
+    const char* path = "store/budgets";
+    struct stat sb;
+
+    if(stat(path, &sb) != 0) {
+        mkdir(path);
+    }
+
+    ofstream file;
+    file.open(filename, ios::out);
+
+    if(file.is_open()) {
+        file << displayBudget();
+    }
+    else {
+        cerr << "File could not be opened...\n";
+    }
+
+    file.close();
 }
 
 /**
@@ -223,7 +238,7 @@ float Budget::getProfit() const {
  * The string display of the entire budget to be displayed to
  * the user as well as be saved to the file
 */
-void Budget::displayBudget() const {
+string Budget::displayBudget() const {
     // Create an string stream
     stringstream ss;
 
@@ -307,7 +322,7 @@ void Budget::displayBudget() const {
     ss << "\n";
 
     // Displays Budget to UI
-    cout << ss.str();
+    return ss.str();
 
 }
 
