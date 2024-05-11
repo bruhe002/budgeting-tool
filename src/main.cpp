@@ -21,7 +21,7 @@ void deleteExpenseMenu(Budget& budget);
 
 int main() {
     // Display the budget
-    Budget b;
+    Budget b("gemma_gt");
 
     // Display menu
     string budget_choice = "";
