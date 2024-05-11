@@ -16,6 +16,7 @@
 #include <limits>
 #include <ctime>
 
+#include <sys/stat.h>
 #include <conio.h>
 
 
@@ -34,7 +35,7 @@ ostream& operator<<(ostream& os, const Expense& exp) {
  * Default Constructor
 */
 Budget::Budget() 
-    : username_(""),
+    : username_("bruhe002"),
       profit_(0.0),
       fixed_income_(),
       one_time_income_(),
@@ -162,14 +163,28 @@ void Budget::exportToFile() const {
     string time;
     string year;
     time_ss >> day >> month >> num_day >> time >> year;
-    cout << "Day : " << day << endl;
-    cout << "Month : " << month << endl;
-    cout << "Date : " << num_day << endl;
-    cout << "time : " << time << endl;
-    cout << "year : " << year << endl;
 
-    system("pause");
+    string filename = "./store/budgets/" + username_ + "_budget_" + month + "_" + year + ".txt";
 
+    // Check if storage directory exists
+    const char* path = "store/budgets";
+    struct stat sb;
+
+    if(stat(path, &sb) != 0) {
+        mkdir(path);
+    }
+
+    ofstream file;
+    file.open(filename, ios::out);
+
+    if(file.is_open()) {
+        file << displayBudget();
+    }
+    else {
+        cerr << "File could not be opened...\n";
+    }
+
+    file.close();
 }
 
 /**
