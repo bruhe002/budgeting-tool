@@ -20,45 +20,6 @@ void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
 
 int main() {
-    // string user = "";
-    // string menu_choice = "";
-    // while(menu_choice != "4") {
-    //     cout << "Welcome to Your Budget!\n\n";
-    //     cout << "Select the following options:\n";
-    //     cout << "\t1. Sign-in\n";
-    //     cout << "\t2. Create New User\n";
-    //     cout << "\t3. Delete a user\n";
-    //     cout << "\t4. Exit\n";
-    //     getline(cin, menu_choice);
-
-    //     if(menu_choice.size() != 1) {
-    //         cerr << "Invalid Option! Please try again...\n";
-    //     }
-    //     else {
-    //         if(menu_choice == "1") {
-
-    //         } else if(menu_choice == "2") {
-
-    //         } else if(menu_choice == "3") {
-
-    //         } else if(menu_choice == "4") {
-
-    //         } else {
-    //             cerr << "Invalid Option! Please try again...\n";
-    //         }
-    //     }
-    //     cout << "Please Enter your user name (Type \"-1\" to exit): ";
-    //     getline(cin, user);
-    //     try {
-    //         if(hasSpace(user)) {
-    //             throw;
-    //         }
-    //     } catch (exception& e) {
-    //         cerr << "User does not exist!\n" << "Creating one";
-    //     }
-
-    // }
-
     // Display the budget
     Budget b;
 
@@ -67,7 +28,7 @@ int main() {
     while(budget_choice != "E") {
         b.displayBudget();
         cout << "Select an option: "
-                "[A]dd expense, [D]elete Expense, [E]xit " << endl;
+                "[A]dd expense, [D]elete Expense, E[X]port Budget, [E]xit " << endl;
         getline(cin, budget_choice);
         if(budget_choice.size() != 1) {
             cerr << "Invalid Option. Please try again." << endl;
@@ -80,6 +41,9 @@ int main() {
                     break;
                 case 'D':
                     deleteExpenseMenu(b);
+                    break;
+                case 'X':
+                    // Export Function
                     break;
                 case 'E':
                     system("clear");
