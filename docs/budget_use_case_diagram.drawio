@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" modified="2024-04-26T23:28:09.461Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0" etag="XUyh7VQ32kSbId09VlfR" version="21.2.7" type="device">
+  <diagram name="Page-1" id="7QZ3avq65RpNlmSFnFbH">
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-8" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-1" target="gYM-IhJF_BdxwjkxLKNN-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-1" target="gYM-IhJF_BdxwjkxLKNN-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-1" target="gYM-IhJF_BdxwjkxLKNN-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-1" target="gYM-IhJF_BdxwjkxLKNN-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-13" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-1" target="gYM-IhJF_BdxwjkxLKNN-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-1" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="310" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-4" value="Add/delete a fixed expense" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="70" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-5" value="Add/delete a fixed income" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-6" value="Add/delete a one-time expense" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-7" value="Add/delete a one-time income" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="280" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-12" value="Export expenses to a file" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="370" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-14" target="gYM-IhJF_BdxwjkxLKNN-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gYM-IhJF_BdxwjkxLKNN-14" target="gYM-IhJF_BdxwjkxLKNN-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-14" value="Budget Tool" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="710" y="230" width="60" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="gYM-IhJF_BdxwjkxLKNN-16" value="Auto update total profit/loss" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
