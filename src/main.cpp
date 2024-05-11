@@ -58,16 +58,6 @@ int main() {
     return 0;
 }
 
-bool hasSpace(const string& str) {
-    for(auto c : str) {
-        if(isspace(c)) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 void addExpenseMenu(Budget& budget) {
     // Ask for name
     string exp_name = "";
