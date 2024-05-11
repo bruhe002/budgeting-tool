@@ -26,7 +26,7 @@ int main() {
     // Display menu
     string budget_choice = "";
     while(budget_choice != "E") {
-        b.displayBudget();
+        cout << b.displayBudget();
         cout << "Select an option: "
                 "[A]dd expense, [D]elete Expense, E[X]port Budget, [E]xit " << endl;
         getline(cin, budget_choice);
