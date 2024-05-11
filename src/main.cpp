@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <exception>
+#include <limits>
 
 using namespace std;
 using namespace budget;
@@ -67,8 +68,8 @@ int main() {
         b.displayBudget();
         cout << "Select an option: "
                 "[A]dd expense, [D]elete Expense, [E]xit " << endl;
-        
         getline(cin, budget_choice);
+        cout << endl <<"Budget choice : ." << budget_choice << "." << endl;
         if(budget_choice.size() != 1) {
             cerr << "Invalid Option. Please try again." << endl;
         } else {
@@ -82,6 +83,7 @@ int main() {
                     deleteExpenseMenu(b);
                     break;
                 case 'E':
+                    system("clear");
                     budget_choice = letter;
                     break;
                 default:
@@ -144,9 +146,15 @@ void addExpenseMenu(Budget& budget) {
         cout << "Value: ";
         try {
             cin >> value;
+            // If value was not numeric it will fail
+            if(value <= 0) {
+                cin.clear();  // Clear the error state
+                cin.ignore(std::numeric_limits<streamsize>::max(),'\n'); // Clear the rest of the input
+                throw except::InvalidOptionException("Not an appropriate value! Please try again...\n");
+            }
             value_flag = false;
         } catch (exception& e) {
-            cerr << e.what() << " Please try again. \n";
+            cerr << e.what();    
         }
     }
 
@@ -180,6 +188,8 @@ void addExpenseMenu(Budget& budget) {
 
             type_flag = false;
         } catch(exception& e) {
+            cin.clear();  // Clear the error state
+            cin.ignore(std::numeric_limits<streamsize>::max(),'\n'); // Clear the rest of the input
             cerr << e.what() << endl;
         }
     }
@@ -199,15 +209,27 @@ void deleteExpenseMenu(Budget& budget) {
             cin >> choice;
             switch(choice) {
                 case 1:
+                    if(budget.getFixedIncomeSize() == 0) {
+                        throw except::InvalidOptionException("No Expenses to Delete!");
+                    }
                     budget.deleteExpense(FIXED_I);
                     break;
                 case 2:
+                    if(budget.getFixedCostSize() == 0) {
+                        throw except::InvalidOptionException("No Expenses to Delete!");
+                    }
                     budget.deleteExpense(FIXED_C);
                     break;
                 case 3:
+                    if(budget.getOneTimeCostSize() == 0) {
+                        throw except::InvalidOptionException("No Expenses to Delete!");
+                    }
                     budget.deleteExpense(ONE_TIME_C);
                     break;
                 case 4:
+                    if(budget.getOneTimeIncomeSize() == 0) {
+                        throw except::InvalidOptionException("No Expenses to Delete!");
+                    }
                     budget.deleteExpense(ONE_TIME_I);
                     break;
                 case 5:
@@ -217,6 +239,8 @@ void deleteExpenseMenu(Budget& budget) {
             }
             quit = true;
         } catch(exception& e) {
+            cin.clear();  // Clear the error state
+            cin.ignore(std::numeric_limits<streamsize>::max(),'\n'); // Clear the rest of the input
             cerr << e.what() << endl;
         }
     }

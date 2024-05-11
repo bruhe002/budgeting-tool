@@ -48,6 +48,10 @@ public:
     void addExpense(const Expense& exp);
     string getStoreName();
     void deleteExpense(const CostType& type);
+    size_t getFixedIncomeSize() { return fixed_income_.size(); }
+    size_t getFixedCostSize() { return fixed_cost_.size(); }
+    size_t getOneTimeCostSize() { return one_time_cost_.size(); }
+    size_t getOneTimeIncomeSize() { return one_time_income_.size(); }
     void saveToFile() const;
     float sumUpExpenses() const;
     void setProfit(float value);

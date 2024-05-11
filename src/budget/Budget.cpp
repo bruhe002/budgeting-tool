@@ -13,6 +13,7 @@
 #include <string>
 #include <iomanip>
 #include <algorithm>
+#include <limits>
 
 #include <conio.h>
 
@@ -92,6 +93,7 @@ void Budget::addExpense(const Expense& exp) {
     // save it to storage file
     // Need to check if the expense exists
     // saveExpenseToFile(exp);
+
 }
 
 string Budget::getStoreName() {
@@ -137,6 +139,8 @@ void Budget::deleteExpense(const CostType& type) {
                 choice_flag = false;
             }
         } catch (exception& e) {
+            cin.clear();  // Clear the error state
+            cin.ignore(std::numeric_limits<streamsize>::max(),'\n'); // Clear the rest of the input
             cerr << e.what() << endl;
         }
     }
