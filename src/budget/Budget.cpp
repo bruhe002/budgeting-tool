@@ -53,26 +53,7 @@ Budget::Budget(const string& user)
       fixed_cost_(),
       one_time_cost_()
 {
-    // Create a file with the name
-    // string filename = getStoreName();
-    // FILE* file = fopen(filename.c_str(), "r");
-
-    // if(!file) {
-    //     // File Doesn't exist
-    //     file = fopen(filename.c_str(), "w");
-    //     fprintf(file, "Name,value,costtype\n");
-
-    // } else {
-    //     char* name = "";
-    //     CostType type = FIXED_I;
-    //     float value = 0.0; 
-    //     while(fscanf(file, "%[^,]%f%i", name, value, (int)type)) {
-    //         addExpenseToBudget(Expense{name, value, type});
-    //     }
-    // }
-
-    // fclose(file);
-
+    
 }
 
 /**
