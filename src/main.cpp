@@ -44,6 +44,7 @@ int main() {
                     break;
                 case 'X':
                     // Export Function
+                    b.exportToFile();
                     break;
                 case 'E':
                     system("clear");

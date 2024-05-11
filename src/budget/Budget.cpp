@@ -151,7 +151,25 @@ void Budget::deleteExpense(const CostType& type) {
  * Saves Budget to a file
 */
 void Budget::exportToFile() const {
-    
+    // Create the time
+    stringstream time_ss;
+    time_t curr_time;
+    time(&curr_time);
+    time_ss << asctime(localtime(&curr_time));
+    string day;
+    string month;
+    string num_day;
+    string time;
+    string year;
+    time_ss >> day >> month >> num_day >> time >> year;
+    cout << "Day : " << day << endl;
+    cout << "Month : " << month << endl;
+    cout << "Date : " << num_day << endl;
+    cout << "time : " << time << endl;
+    cout << "year : " << year << endl;
+
+    system("pause");
+
 }
 
 /**
