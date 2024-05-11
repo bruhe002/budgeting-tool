@@ -52,11 +52,11 @@ public:
     size_t getFixedCostSize() { return fixed_cost_.size(); }
     size_t getOneTimeCostSize() { return one_time_cost_.size(); }
     size_t getOneTimeIncomeSize() { return one_time_income_.size(); }
-    void saveToFile() const;
+    void exportToFile() const;
     float sumUpExpenses() const;
     void setProfit(float value);
     float getProfit() const;
-    void displayBudget() const;
+    string displayBudget() const;
 
     ~Budget();
 

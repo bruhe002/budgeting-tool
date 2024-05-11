@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
+#include <ctime>
 
 #include <conio.h>
 
@@ -53,7 +54,7 @@ Budget::Budget(const string& user)
       fixed_cost_(),
       one_time_cost_()
 {
-    
+
 }
 
 /**
@@ -149,8 +150,8 @@ void Budget::deleteExpense(const CostType& type) {
 /**
  * Saves Budget to a file
 */
-void Budget::saveToFile() const {
-    // pass
+void Budget::exportToFile() const {
+    
 }
 
 /**
@@ -204,7 +205,7 @@ float Budget::getProfit() const {
  * The string display of the entire budget to be displayed to
  * the user as well as be saved to the file
 */
-void Budget::displayBudget() const {
+string Budget::displayBudget() const {
     // Create an string stream
     stringstream ss;
 
@@ -288,7 +289,7 @@ void Budget::displayBudget() const {
     ss << "\n";
 
     // Displays Budget to UI
-    cout << ss.str();
+    return ss.str();
 
 }
 
