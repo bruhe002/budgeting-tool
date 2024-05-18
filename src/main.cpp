@@ -20,6 +20,8 @@ void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
 
 int main() {
+    // Sign in will go here
+
     // Display the budget
     Budget b("gemma_gt");
 
