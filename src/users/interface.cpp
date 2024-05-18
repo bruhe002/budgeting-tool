@@ -12,7 +12,7 @@
 
 #include <conio.h>
 
-#include "except/InvalidOptionException.h"
+#include "../except/InvalidOptionException.h"
 
 const std::string path = "src/users/";
 
