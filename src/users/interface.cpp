@@ -35,9 +35,12 @@ int main() {
         usr_file.open(filename, std::ios::in);
 
         std::string line = "";
-
         // Check if username is in the file
         try {
+            if(!usr_file.is_open()) {
+                throw except::InvalidOptionException("ERROR: File failed to open!\n");
+            }
+
             while(getline(usr_file, line)) {
                 if(line == input) {
                     usr_file.close();
@@ -52,6 +55,9 @@ int main() {
             // If we pass the loop, add the username
             usr_file.close();
             usr_file.open(filename, std::ios::app);
+            if(!usr_file.is_open()) {
+                throw except::InvalidOptionException("ERROR: File failed to open!\n");
+            }
             usr_file << input;
             usr_file.close();
 
