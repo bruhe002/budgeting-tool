@@ -12,6 +12,7 @@
 #include <fstream>
 #include <exception>
 #include <limits>
+#include <utility>
 
 using namespace std;
 using namespace budget;
@@ -102,6 +103,7 @@ void addExpenseMenu(Budget& budget) {
     string exp_name = "";
     float value = 0.00;
     int type = 0;
+    std::pair<string, string> current_time = getCurrentTime();
 
     bool name_flag = true;
     while(name_flag) {
@@ -147,16 +149,16 @@ void addExpenseMenu(Budget& budget) {
 
             switch(type) {
                 case 1:
-                    budget.addExpense({exp_name, value, FIXED_I});
+                    budget.addExpense({exp_name, value, FIXED_I, current_time.first, current_time.second});
                     break;
                 case 2:
-                    budget.addExpense({exp_name, value, FIXED_C});
+                    budget.addExpense({exp_name, value, FIXED_C, current_time.first, current_time.second});
                     break;
                 case 3:
-                    budget.addExpense({exp_name, value, ONE_TIME_C});
+                    budget.addExpense({exp_name, value, ONE_TIME_C, current_time.first, current_time.second});
                     break;
                 case 4:
-                    budget.addExpense({exp_name, value, ONE_TIME_I});
+                    budget.addExpense({exp_name, value, ONE_TIME_I, current_time.first, current_time.second});
                     break;
             }
 
