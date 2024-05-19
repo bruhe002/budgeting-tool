@@ -79,10 +79,6 @@ void Budget::addExpense(const Expense& exp) {
 
 }
 
-string Budget::getStoreName() {
-    return username_ + "_expense_store.csv";
-}
-
 /**
  * Deletes an expense from the budget class
  * @name Name of struct to be deleted
@@ -329,7 +325,7 @@ void Budget::saveExpenseToFile(const Expense& exp) {
         file.close();
         file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::app);
     }
-    
+
     file << exp << "\n";
     file.close();  // Close file
 }
