@@ -9,11 +9,14 @@
 #include "except/InvalidOptionException.h"
 
 #include <iostream>
+#include <fstream>
 #include <exception>
 #include <limits>
 
 using namespace std;
 using namespace budget;
+
+const string USERS_STORE_FILEPATH = "src/users/usr.txt";
 
 bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
@@ -21,9 +24,37 @@ void deleteExpenseMenu(Budget& budget);
 
 int main() {
     // Sign in will go here
+    bool sign_in_on = true;
+    string username_input = "";
+    
+    cout << "Please enter your username: ";
+    while(sign_in_on) {
+        getline(cin, username_input);
+
+        // Open and search for username in file
+        ifstream user_file;
+        string user = "";
+        user_file.open(USERS_STORE_FILEPATH, ios::in);
+
+        if(user_file.is_open()) {
+            while(getline(user_file, user)) {
+                if (user == username_input) {
+                    user_file.close();
+                    sign_in_on = false;
+                }
+            }
+
+            if(sign_in_on) {
+                cerr << "ERROR: Username does not exist! Please try again...\n";
+            }
+        } else {
+            cerr << "File failed to open...\n";
+        }
+    }
+
 
     // Display the budget
-    Budget b("gemma_gt");
+    Budget b(username_input);
 
     // Display menu
     string budget_choice = "";
