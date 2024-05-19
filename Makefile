@@ -3,13 +3,14 @@ SOURCE=src
 all: build run
 
 build:
-	g++ -c src/users/interface.cpp -o src/users/interface.exe
-	g++ -c src/main.cpp -o main.o
-	g++ -c src/budget/Budget.cpp -o Budget.o
-	g++ main.o Budget.o -o main.exe
+	g++ -c src/users/interface.cpp -o builds/interface.o
+	g++ builds/interface.o -o builds/interface.exe
+	g++ -c src/main.cpp -o builds/main.o
+	g++ -c src/budget/Budget.cpp -o builds/Budget.o
+	g++ builds/main.o builds/Budget.o -o builds/main.exe
 
 run:
-	./main.exe
+	builds/main.exe
 
 sign-up:
-	./src/users/interface.exe
+	builds/interface.exe
