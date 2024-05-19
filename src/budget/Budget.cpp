@@ -24,7 +24,7 @@ namespace budget {
 const int COLUMN_WIDTH = 30;
 const string COLUMN_SPACE = "  ";
 const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
-const string EXPENSE_STORAGE = "expense_store/";
+const string EXPENSE_DIR = "store/expenses/";
 
 ostream& operator<<(ostream& os, const Expense& exp) {
     os << exp.name_ << "," << exp.value_ << "," << exp.type_ << "," << exp.month_ << "," << exp.year_ << "\n";
@@ -61,9 +61,7 @@ Budget::Budget(const string& user)
 /**
  * Default Destructor
 */
-Budget::~Budget() {
-    // Save budgets to storage
-}
+Budget::~Budget() {}
 
 /**
  * Adds an expense to the budget class
@@ -322,15 +320,18 @@ void Budget::saveExpenseToFile(const Expense& exp) {
     // open file with username
     ofstream file;
     stringstream str;
-    file.open(getStoreName(), ios::app);
+    file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::app);
 
     // check if open
     if(!file) {
         // Handle errors later
-    } else {
-        file << exp;
-        file.close();  // Close file
+        file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::out);
+        file.close();
+        file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::app);
     }
+    
+    file << exp << "\n";
+    file.close();  // Close file
 }
 
 }  // namespace budget
