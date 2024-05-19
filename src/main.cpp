@@ -16,20 +16,25 @@
 using namespace std;
 using namespace budget;
 
-const string USERS_STORE_FILEPATH = "src/users/usr.txt";
+const string USERS_STORE_FILEPATH = "store/users/usr.txt";
 
 bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
 
 int main() {
+    system("clear");
     // Sign in will go here
     bool sign_in_on = true;
     string username_input = "";
     
-    cout << "Please enter your username: ";
     while(sign_in_on) {
+        cout << "Please enter your username: ";
         getline(cin, username_input);
+
+        if(username_input == "quit") {
+            exit(0);
+        }
 
         // Open and search for username in file
         ifstream user_file;
