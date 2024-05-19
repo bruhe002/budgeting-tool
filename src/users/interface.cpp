@@ -14,7 +14,9 @@
 
 #include "../except/InvalidOptionException.h"
 
-const std::string path = "src/users/";
+const std::string USER_DIR = "./store/users/";
+
+const std::string USER_FILENAME = USER_DIR + "usr.txt";
 
 int main() {
     std::cout << std::string(10, '-')  << "SIGN-UP FOR BUDGET" << std::string(10, '-') << std::endl;
@@ -27,18 +29,23 @@ int main() {
         std::string input;
         getline(std::cin, input);
 
+        if(input == "quit") {
+            exit(0);
+        }
+
         // Need to check if the name exists in the file 
         // Check if storage directory exists
-        std::string filename = path + "usr.txt";
-
         std::fstream usr_file;
-        usr_file.open(filename, std::ios::in);
+        usr_file.open(USER_FILENAME, std::ios::in);
 
         std::string line = "";
         // Check if username is in the file
         try {
+            std::cout << "Didnt open\n";
             if(!usr_file.is_open()) {
-                throw except::InvalidOptionException("ERROR: File failed to open!\n");
+                usr_file.open(USER_FILENAME, std::ios::out);
+                usr_file.close();
+                usr_file.open(USER_FILENAME, std::ios::in);
             }
 
             while(getline(usr_file, line)) {
@@ -54,7 +61,7 @@ int main() {
 
             // If we pass the loop, add the username
             usr_file.close();
-            usr_file.open(filename, std::ios::app);
+            usr_file.open(USER_FILENAME, std::ios::app);
             if(!usr_file.is_open()) {
                 throw except::InvalidOptionException("ERROR: File failed to open!\n");
             }
