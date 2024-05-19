@@ -42,7 +42,6 @@ int main() {
         std::string line = "";
         // Check if username is in the file
         try {
-            std::cout << "Didnt open\n";
             if(!usr_file.is_open()) {
                 usr_file.open(USER_FILENAME, std::ios::out);
                 usr_file.close();
@@ -66,7 +65,7 @@ int main() {
             if(!usr_file.is_open()) {
                 throw except::InvalidOptionException("ERROR: File failed to open!\n");
             }
-            usr_file << input;
+            usr_file << input + "\n";
             usr_file.close();
 
             std::cout << input << " successfully added!\n";
