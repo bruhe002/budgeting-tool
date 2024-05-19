@@ -27,7 +27,7 @@ const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
 const string EXPENSE_STORAGE = "expense_store/";
 
 ostream& operator<<(ostream& os, const Expense& exp) {
-    os << exp.name_ << "," << exp.value_ << "," << exp.type_ << "\n";
+    os << exp.name_ << "," << exp.value_ << "," << exp.type_ << "," << exp.month_ << "," << exp.year_ << "\n";
     return os;
 }
 
@@ -55,13 +55,15 @@ Budget::Budget(const string& user)
       fixed_cost_(),
       one_time_cost_()
 {
-
+    // Read budgets from storage
 }
 
 /**
  * Default Destructor
 */
-Budget::~Budget() {}
+Budget::~Budget() {
+    // Save budgets to storage
+}
 
 /**
  * Adds an expense to the budget class
@@ -152,19 +154,9 @@ void Budget::deleteExpense(const CostType& type) {
  * Saves Budget to a file
 */
 void Budget::exportToFile() const {
-    // Create the time
-    stringstream time_ss;
-    time_t curr_time;
-    time(&curr_time);
-    time_ss << asctime(localtime(&curr_time));
-    string day;
-    string month;
-    string num_day;
-    string time;
-    string year;
-    time_ss >> day >> month >> num_day >> time >> year;
+    std::pair<string, string> current_time = getCurrentTime();
 
-    string filename = "./store/budgets/" + username_ + "_budget_" + month + "_" + year + ".txt";
+    string filename = "./store/budgets/" + username_ + "_budget_" + current_time.first + "_" + current_time.second + ".txt";
 
     // Check if storage directory exists
     const char* path = "store/budgets";
