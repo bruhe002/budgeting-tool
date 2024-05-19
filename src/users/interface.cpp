@@ -19,6 +19,7 @@ const std::string USER_DIR = "./store/users/";
 const std::string USER_FILENAME = USER_DIR + "usr.txt";
 
 int main() {
+    system("clear");
     std::cout << std::string(10, '-')  << "SIGN-UP FOR BUDGET" << std::string(10, '-') << std::endl;
     bool interface_on = true;
 
