@@ -13,10 +13,28 @@
 #include <string>
 #include <vector>
 #include <stdint.h>
+#include <utility>
 
 #include <ctime>
 
 using namespace std;
+
+std::pair<string, string> getCurrentTime() {
+    // Create the time
+    stringstream time_ss;
+    time_t curr_time;
+    time(&curr_time);
+    time_ss << asctime(localtime(&curr_time));
+    string day;
+    string month;
+    string num_day;
+    string time;
+    string year;
+    time_ss >> day >> month >> num_day >> time >> year;
+
+    return std::make_pair(month, year);
+}
+
 namespace budget {
 
 enum CostType : uint32_t {
@@ -30,6 +48,8 @@ struct Expense {
     string name_;
     float value_;
     CostType type_;
+    string month_;
+    string year_;
 
     float operator+(const Expense& exp) {
         return this->value_ + exp.value_;
