@@ -19,6 +19,22 @@
 #include <sys/stat.h>
 #include <conio.h>
 
+std::pair<string, string> getCurrentTime(){
+    // Create the time
+    stringstream time_ss;
+    time_t curr_time;
+    time(&curr_time);
+    time_ss << asctime(localtime(&curr_time));
+    string day;
+    string month;
+    string num_day;
+    string time;
+    string year;
+    time_ss >> day >> month >> num_day >> time >> year;
+
+    return std::make_pair(month, year);
+}
+
 
 namespace budget {
 const int COLUMN_WIDTH = 30;
@@ -35,7 +51,7 @@ ostream& operator<<(ostream& os, const Expense& exp) {
  * Default Constructor
 */
 Budget::Budget() 
-    : username_("bruhe002"),
+    : username_("test_user"),
       profit_(0.0),
       fixed_income_(),
       one_time_income_(),
@@ -56,6 +72,65 @@ Budget::Budget(const string& user)
       one_time_cost_()
 {
     // Read budgets from storage
+    ifstream exp_file;
+
+    exp_file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::in);
+
+    if(!exp_file.is_open()) {
+        cerr << "WARNING: No Expenses saved for user. Creating a new storage now.\n";
+        exp_file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::out);
+        exp_file.close();
+    } else {
+        // Get current time
+        pair<string, string> current_time = getCurrentTime();
+        
+        // Set variables to read from file
+        string exp_name;
+        string exp_value;
+        string exp_type;
+        string exp_month;
+        string exp_year;
+
+        // set up variable for each line
+        string line;
+        // Get the row
+        while(getline(exp_file, line)) {
+            // create the stream
+            stringstream ss(line);
+            char delim = ',';
+
+            // Extract each attribute in order
+            getline(ss, exp_name, delim);
+            getline(ss, exp_value, delim);
+            getline(ss, exp_type, delim);
+            getline(ss, exp_month, delim);
+            getline(ss, exp_year, delim);
+
+            if(exp_month == current_time.first && exp_year == current_time.second) {
+                // convert the values
+                unsigned int exp_type_int = std::stoi(exp_type);
+                float exp_value_float = std::stof(exp_value);
+                
+                // figure out which vector to push the expense value in
+                switch(exp_type_int) {
+                    case 0:
+                        fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
+                        break;
+                    case 1:
+                        fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
+                        break;
+                    case 2:
+                        one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
+                        break;
+                    case 3:
+                        one_time_income_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_I, exp_month, exp_year});
+                        break;
+                }
+            }
+        }
+
+        exp_file.close();
+    }
 }
 
 /**
@@ -75,7 +150,7 @@ void Budget::addExpense(const Expense& exp) {
     // After the expense is added to the appropriate vector
     // save it to storage file
     // Need to check if the expense exists
-    // saveExpenseToFile(exp);
+    saveExpenseToFile(exp);
 
 }
 
@@ -326,7 +401,7 @@ void Budget::saveExpenseToFile(const Expense& exp) {
         file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::app);
     }
 
-    file << exp << "\n";
+    file << exp;
     file.close();  // Close file
 }
 
