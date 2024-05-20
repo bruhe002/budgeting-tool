@@ -47,7 +47,7 @@ struct Expense {
 
     string toString() const {
         stringstream ss;
-        ss << name_ << "," << value_ << "," << type_ << "," << month_ << "," << year_ << "\n";
+        ss << name_ << "," << value_ << "," << type_ << "," << month_ << "," << year_;
         return ss.str();
     }
 };

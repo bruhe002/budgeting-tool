@@ -181,7 +181,7 @@ void Budget::deleteExpense(const CostType& type) {
         cout << "Choose an expense to delete: \n";
 
         for(int i = 0; i < list.size(); i++) {
-            cout << "\t" << i+1 << ". " << list[i];
+            cout << "\t" << i+1 << ". " << list[i] << endl;
         }
         try {
             cin >> choice;
@@ -189,6 +189,8 @@ void Budget::deleteExpense(const CostType& type) {
             if (choice >= list.size()) {
                 throw except::InvalidOptionException();
             } else {
+                Expense exp_to_delete = *(list.begin() + choice);
+                deleteExpenseFromFile(exp_to_delete);
                 list.erase(list.begin() + choice);
                 choice_flag = false;
             }
@@ -401,13 +403,14 @@ void Budget::saveExpenseToFile(const Expense& exp) {
         file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::app);
     }
 
-    file << exp;
+    file << exp << endl;
     file.close();  // Close file
 }
 
 void Budget::deleteExpenseFromFile(const Expense& exp) {
     // Open the file
-    fstream exp_file(EXPENSE_DIR + username_ + "_expense_store.csv");
+    fstream exp_file;
+    exp_file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::in);
 
     if(!exp_file.is_open()) {
         cerr << "WARNING: Could not open file!\n";
@@ -421,7 +424,8 @@ void Budget::deleteExpenseFromFile(const Expense& exp) {
                 ss << line << "\n";
             }
         }
-
+        exp_file.close();
+        exp_file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::out);
         // add string stream to file
         exp_file << ss.str();
 
