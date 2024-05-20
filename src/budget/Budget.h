@@ -44,6 +44,12 @@ struct Expense {
     float operator+(float f) {
         return f + value_;
     }
+
+    string toString() const {
+        stringstream ss;
+        ss << name_ << "," << value_ << "," << type_ << "," << month_ << "," << year_ << "\n";
+        return ss.str();
+    }
 };
 
 class Budget {
@@ -72,6 +78,7 @@ private:
      * database for saved budgets
     */
     void saveExpenseToFile(const Expense& exp);
+    void deleteExpenseFromFile(const Expense& exp);
 
     void addExpenseToBudget(const Expense& exp) {
         switch(exp.type_) {

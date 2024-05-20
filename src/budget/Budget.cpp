@@ -43,7 +43,7 @@ const int DISPLAY_WIDTH = (COLUMN_WIDTH + COLUMN_SPACE.size()) * 4;
 const string EXPENSE_DIR = "store/expenses/";
 
 ostream& operator<<(ostream& os, const Expense& exp) {
-    os << exp.name_ << "," << exp.value_ << "," << exp.type_ << "," << exp.month_ << "," << exp.year_ << "\n";
+    os << exp.toString();
     return os;
 }
 
@@ -403,6 +403,30 @@ void Budget::saveExpenseToFile(const Expense& exp) {
 
     file << exp;
     file.close();  // Close file
+}
+
+void Budget::deleteExpenseFromFile(const Expense& exp) {
+    // Open the file
+    fstream exp_file(EXPENSE_DIR + username_ + "_expense_store.csv");
+
+    if(!exp_file.is_open()) {
+        cerr << "WARNING: Could not open file!\n";
+    } else {
+        string line;
+        stringstream ss;
+        
+        // Add lines to a string stream
+        while(getline(exp_file, line)) {
+            if(line != exp.toString()) {
+                ss << line << "\n";
+            }
+        }
+
+        // add string stream to file
+        exp_file << ss.str();
+
+        exp_file.close();
+    }
 }
 
 }  // namespace budget
