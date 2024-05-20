@@ -19,21 +19,7 @@
 
 using namespace std;
 
-std::pair<string, string> getCurrentTime() {
-    // Create the time
-    stringstream time_ss;
-    time_t curr_time;
-    time(&curr_time);
-    time_ss << asctime(localtime(&curr_time));
-    string day;
-    string month;
-    string num_day;
-    string time;
-    string year;
-    time_ss >> day >> month >> num_day >> time >> year;
-
-    return std::make_pair(month, year);
-}
+std::pair<string, string> getCurrentTime();
 
 namespace budget {
 
@@ -108,9 +94,9 @@ private:
     float profit_;
 
     vector<Expense> fixed_income_;
-    vector<Expense> one_time_income_;
     vector<Expense> fixed_cost_;
     vector<Expense> one_time_cost_;
+    vector<Expense> one_time_income_;
 };
 }  // namespace budget
 
