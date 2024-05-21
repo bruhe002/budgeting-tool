@@ -24,8 +24,8 @@ void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
 
 int main() {
-    system("cls");
     system("clear");
+    system("cls");
     // Sign in will go here
     bool sign_in_on = true;
     string username_input = "";
@@ -87,8 +87,8 @@ int main() {
                     b.exportToFile();
                     break;
                 case 'E':
-                    system("cls");
                     system("clear");
+                    system("cls");
                     budget_choice = letter;
                     break;
                 default:
