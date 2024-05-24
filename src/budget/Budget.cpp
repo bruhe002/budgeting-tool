@@ -137,6 +137,25 @@ Budget::~Budget() {}
  * @param exp The expense to be added
 */
 void Budget::addExpense(const Expense& exp) {
+    // See if the expense is already saved in the file
+    ifstream file;
+    string line;
+    file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::in);
+
+    // check if open
+    if(!file) {
+        // Handle errors later
+        file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::out);
+        file.close();
+        file.open(EXPENSE_DIR + username_ + "_expense_store.csv", ios::in);
+    }
+
+    while(getline(file, line)) {
+        if(line == exp.toString()) {
+            throw except::InvalidOptionException("Expense Already Exists! Please try again!");
+        }
+    }
+
     // We need to see what type of Expense it is
     // fixed, income etc
     addExpenseToBudget(exp);
