@@ -98,7 +98,6 @@ Budget::Budget(const string& user)
             // create the stream
             stringstream ss(line);
             char delim = ',';
-
             // Extract each attribute in order
             getline(ss, exp_name, delim);
             getline(ss, exp_value, delim);
@@ -110,13 +109,13 @@ Budget::Budget(const string& user)
             float exp_value_float = std::stof(exp_value);
             
             // Fixed Expenses should be added regardless of date
-            // Any other should have a a matching date
+            // Any other should have a matching date
             if (exp_type_int == 0) {
                 fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
             } else if (exp_type_int == 1) {
                 fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
             } else if(exp_month == current_time.first && exp_year == current_time.second) {
-                if(exp_type_int = 2) {
+                if(exp_type_int == 2) {
                     one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
                 } else {
                     one_time_income_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_I, exp_month, exp_year});
@@ -168,6 +167,9 @@ void Budget::deleteExpense(const CostType& type) {
         case ONE_TIME_I:
             copy(one_time_income_.begin(), one_time_income_.end(), back_inserter(list));
             break;
+    }
+    if(list.size() == 0) {
+        throw except::InvalidOptionException("ERROR: This list is empty! Please try again!");
     }
 
     uint32_t choice = 0;

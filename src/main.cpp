@@ -169,6 +169,7 @@ void addExpenseMenu(Budget& budget) {
             cin.clear();  // Clear the error state
             cin.ignore(std::numeric_limits<streamsize>::max(),'\n'); // Clear the rest of the input
             cerr << e.what() << endl;
+            system("pause");
         }
     }
 }
