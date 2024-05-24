@@ -106,25 +106,20 @@ Budget::Budget(const string& user)
             getline(ss, exp_month, delim);
             getline(ss, exp_year, delim);
 
-            if(exp_month == current_time.first && exp_year == current_time.second) {
-                // convert the values
-                unsigned int exp_type_int = std::stoi(exp_type);
-                float exp_value_float = std::stof(exp_value);
-                
-                // figure out which vector to push the expense value in
-                switch(exp_type_int) {
-                    case 0:
-                        fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
-                        break;
-                    case 1:
-                        fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
-                        break;
-                    case 2:
-                        one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
-                        break;
-                    case 3:
-                        one_time_income_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_I, exp_month, exp_year});
-                        break;
+            unsigned int exp_type_int = std::stoi(exp_type);
+            float exp_value_float = std::stof(exp_value);
+            
+            // Fixed Expenses should be added regardless of date
+            // Any other should have a a matching date
+            if (exp_type_int == 0) {
+                fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
+            } else if (exp_type_int == 1) {
+                fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
+            } else if(exp_month == current_time.first && exp_year == current_time.second) {
+                if(exp_type_int = 2) {
+                    one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
+                } else {
+                    one_time_income_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_I, exp_month, exp_year});
                 }
             }
         }
