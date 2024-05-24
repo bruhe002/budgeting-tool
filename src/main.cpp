@@ -151,10 +151,10 @@ void addExpenseMenu(Budget& budget) {
 
             switch(type) {
                 case 1:
-                    budget.addExpense({exp_name, value, FIXED_I, current_time.first, current_time.second});
+                    budget.addExpense({exp_name, value, FIXED_I, "", ""});
                     break;
                 case 2:
-                    budget.addExpense({exp_name, value, FIXED_C, current_time.first, current_time.second});
+                    budget.addExpense({exp_name, value, FIXED_C, "", ""});
                     break;
                 case 3:
                     budget.addExpense({exp_name, value, ONE_TIME_C, current_time.first, current_time.second});
