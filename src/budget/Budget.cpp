@@ -152,9 +152,12 @@ void Budget::addExpense(const Expense& exp) {
 
     while(getline(file, line)) {
         if(line == exp.toString()) {
+            file.close();
             throw except::InvalidOptionException("Expense Already Exists! Please try again!");
         }
     }
+
+    file.close();
 
     // We need to see what type of Expense it is
     // fixed, income etc
