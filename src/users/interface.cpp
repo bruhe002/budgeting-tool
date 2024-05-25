@@ -6,10 +6,12 @@
 ////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <sstream>
 #include <string>
-#include <sys/stat.h>
 #include <fstream>
+#include <ctime>
 
+#include <sys/stat.h>
 #include <conio.h>
 
 #include "../except/InvalidOptionException.h"
@@ -17,6 +19,24 @@
 const std::string USER_DIR = "./store/users/";
 
 const std::string USER_FILENAME = USER_DIR + "usr.txt";
+
+const char DELIM = ',';
+
+std::pair<std::string, std::string> getCurrentTime(){
+    // Create the time
+    std::stringstream time_ss;
+    time_t curr_time;
+    time(&curr_time);
+    time_ss << asctime(localtime(&curr_time));
+    std::string day;
+    std::string month;
+    std::string num_day;
+    std::string time;
+    std::string year;
+    time_ss >> day >> month >> num_day >> time >> year;
+
+    return std::make_pair(month, year);
+}
 
 int main() {
     system("cls");
@@ -50,7 +70,12 @@ int main() {
             }
 
             while(getline(usr_file, line)) {
-                if(line == input) {
+                std::stringstream ss(line);
+                std::string name;
+                std::string month;
+                std::getline(ss, name, DELIM);
+                std::getline(ss, month, DELIM);
+                if(name == input) {
                     usr_file.close();
                     throw except::InvalidOptionException("ERROR: Username already exists! Please try again!\n");
                 } else if(line == "quit") {
@@ -66,7 +91,11 @@ int main() {
             if(!usr_file.is_open()) {
                 throw except::InvalidOptionException("ERROR: File failed to open!\n");
             }
-            usr_file << input + "\n";
+
+            // Get the current month
+            std::pair<std::string, std::string> current_date = getCurrentTime();
+
+            usr_file << input + DELIM + current_date.first + "\n";
             usr_file.close();
 
             std::cout << input << " successfully added!\n";
