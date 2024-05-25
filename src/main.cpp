@@ -80,24 +80,28 @@ int main() {
         string line = "";
         string user = "";
         string month = "";
+        stringstream new_file_input;
         user_file.open(USERS_STORE_FILEPATH);
 
         while(getline(user_file, line)) {
             stringstream ss(line);
-            stringstream new_file_input;
+            
             getline(ss, user, ',');
             getline(ss, month, ',');
             if(user != username_input) {
-                
+                new_file_input << user << "," << month << "\n";
             }
         }
 
+        new_file_input << username_input << "," << current_time.first << "\n";
 
+        user_file << new_file_input.str();
+        user_file.close();
 
     }
 
     // Display the budget
-    Budget b(username_input, user_month);
+    Budget b(username_input, current_time);
 
     // Display menu
     string budget_choice = "";
