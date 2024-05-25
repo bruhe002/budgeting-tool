@@ -71,7 +71,7 @@ int main() {
     // Check if the saved user_month is the same as the current month
     if(current_time.first != user_month) {
         // create a budget and export the file
-        Budget prev_bud(username_input, user_month);
+        Budget prev_bud(username_input, make_pair(user_month, current_time.second));
 
         prev_bud.exportToFile();
 
