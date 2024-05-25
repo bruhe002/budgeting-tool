@@ -17,7 +17,7 @@
 using namespace std;
 using namespace budget;
 
-const string USERS_STORE_FILEPATH = "store/users/usr.txt";
+const string USERS_STORE_FILEPATH = "store/users/usr.csv";
 
 bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
@@ -68,10 +68,16 @@ int main() {
         }
     }
 
+    Budget b(username_input, current_time);
+
     // Check if the saved user_month is the same as the current month
+    float last_month_profit = 0.0;
     if(current_time.first != user_month) {
         // create a budget and export the file
         Budget prev_bud(username_input, make_pair(user_month, current_time.second));
+
+        // Add previous expense to the current budget
+        b.addExpense({"LastMonProfit", prev_bud.getProfit(), CostType::ONE_TIME_I, current_time.first, current_time.second});
 
         prev_bud.exportToFile();
 
@@ -99,9 +105,6 @@ int main() {
         user_file.close();
 
     }
-
-    // Display the budget
-    Budget b(username_input, current_time);
 
     // Display menu
     string budget_choice = "";
