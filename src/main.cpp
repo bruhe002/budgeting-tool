@@ -26,9 +26,13 @@ void deleteExpenseMenu(Budget& budget);
 int main() {
     system("clear");
     system("cls");
+
+    pair<string, string> current_time = getCurrentTime();
+
     // Sign in will go here
     bool sign_in_on = true;
     string username_input = "";
+    string user_month = "";
     
     while(sign_in_on) {
         cout << "Please enter your username: ";
@@ -40,11 +44,16 @@ int main() {
 
         // Open and search for username in file
         ifstream user_file;
+        string line = "";
         string user = "";
+        
         user_file.open(USERS_STORE_FILEPATH, ios::in);
 
         if(user_file.is_open()) {
-            while(getline(user_file, user)) {
+            while(getline(user_file, line)) {
+                stringstream ss(line);
+                getline(ss, user, ',');
+                getline(ss, user_month, ',');
                 if (user == username_input) {
                     user_file.close();
                     sign_in_on = false;
@@ -59,9 +68,36 @@ int main() {
         }
     }
 
+    // Check if the saved user_month is the same as the current month
+    if(current_time.first != user_month) {
+        // create a budget and export the file
+        Budget prev_bud(username_input, user_month);
+
+        prev_bud.exportToFile();
+
+        // Update the user month in the file
+        fstream user_file;
+        string line = "";
+        string user = "";
+        string month = "";
+        user_file.open(USERS_STORE_FILEPATH);
+
+        while(getline(user_file, line)) {
+            stringstream ss(line);
+            stringstream new_file_input;
+            getline(ss, user, ',');
+            getline(ss, month, ',');
+            if(user != username_input) {
+                
+            }
+        }
+
+
+
+    }
 
     // Display the budget
-    Budget b(username_input);
+    Budget b(username_input, user_month);
 
     // Display menu
     string budget_choice = "";

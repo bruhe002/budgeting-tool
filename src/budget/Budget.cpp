@@ -63,7 +63,7 @@ Budget::Budget()
  * Overload Constructor
  * @param user The username to identify the budget
 */
-Budget::Budget(const string& user) 
+Budget::Budget(const string& user, const pair<string&, string&> date) 
     : username_(user),
       profit_(0.0),
       fixed_income_(),

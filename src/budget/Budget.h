@@ -55,7 +55,7 @@ struct Expense {
 class Budget {
 public:
     Budget();
-    Budget(const string& user);
+    Budget(const string& user, const string& saved_month);
 
     void addExpense(const Expense& exp);
     string getStoreName();
