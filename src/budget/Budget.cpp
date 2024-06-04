@@ -114,7 +114,7 @@ Budget::Budget(const string& user, const pair<string, string>& date)
                 fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
             } else if (exp_type_int == 1) {
                 fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
-            } else if(exp_month == current_time.first && exp_year == current_time.second) {
+            } else if(exp_month == date.first && exp_year == date.second) {
                 if(exp_type_int == 2) {
                     one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
                 } else {
@@ -243,10 +243,10 @@ void Budget::deleteExpense(const CostType& type) {
 /**
  * Saves Budget to a file
 */
-void Budget::exportToFile() const {
-    std::pair<string, string> current_time = getCurrentTime();
+void Budget::exportToFile(std::pair<string, string> date) const {
+    // std::pair<string, string> current_time = getCurrentTime();
 
-    string filename = "./store/budgets/" + username_ + "_budget_" + current_time.first + "_" + current_time.second + ".txt";
+    string filename = "./store/budgets/" + username_ + "_budget_" + date.first + "_" + date.second + ".txt";
 
     // Check if storage directory exists
     const char* path = "store/budgets";

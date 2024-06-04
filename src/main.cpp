@@ -77,9 +77,9 @@ int main() {
         Budget prev_bud(username_input, make_pair(user_month, current_time.second));
 
         // Add previous expense to the current budget
-        b.addExpense({"LastMonProfit", prev_bud.getProfit(), CostType::ONE_TIME_I, current_time.first, current_time.second});
+        b.addExpense({"LastMonProfit", prev_bud.sumUpExpenses(), CostType::ONE_TIME_I, current_time.first, current_time.second});
 
-        prev_bud.exportToFile();
+        prev_bud.exportToFile(make_pair(user_month, current_time.second));
 
         // Update the user month in the file
         fstream user_file;
@@ -87,7 +87,7 @@ int main() {
         string user = "";
         string month = "";
         stringstream new_file_input;
-        user_file.open(USERS_STORE_FILEPATH);
+        user_file.open(USERS_STORE_FILEPATH, ios::in);
 
         while(getline(user_file, line)) {
             stringstream ss(line);
@@ -101,6 +101,8 @@ int main() {
 
         new_file_input << username_input << "," << current_time.first << "\n";
 
+        user_file.close();
+        user_file.open(USERS_STORE_FILEPATH, ios::out);
         user_file << new_file_input.str();
         user_file.close();
 
@@ -127,7 +129,7 @@ int main() {
                     break;
                 case 'X':
                     // Export Function
-                    b.exportToFile();
+                    b.exportToFile(make_pair(current_time.first, current_time.second));
                     break;
                 case 'E':
                     system("clear");
