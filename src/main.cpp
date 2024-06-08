@@ -33,6 +33,7 @@ int main() {
     bool sign_in_on = true;
     string username_input = "";
     string user_month = "";
+    string user_year = "";
     
     while(sign_in_on) {
         cout << "Please enter your username: ";
@@ -54,6 +55,7 @@ int main() {
                 stringstream ss(line);
                 getline(ss, user, ',');
                 getline(ss, user_month, ',');
+                getline(ss, user_year, ',');
                 if (user == username_input) {
                     user_file.close();
                     sign_in_on = false;
@@ -74,7 +76,13 @@ int main() {
     float last_month_profit = 0.0;
     if(current_time.first != user_month) {
         // create a budget and export the file
-        Budget prev_bud(username_input, user_month, current_time.second);
+        string prev_month_year = current_time.second;
+        bool year_change = false;
+        if(current_time.second != user_year) {
+            year_change = true;
+            prev_month_year = user_year; 
+        }
+        Budget prev_bud(username_input, user_month, prev_month_year);
 
         // Add previous expense to the current budget
         b.addExpense({"LastMonProfit", prev_bud.sumUpExpenses(), CostType::ONE_TIME_I, current_time.first, current_time.second});
@@ -86,6 +94,7 @@ int main() {
         string line = "";
         string user = "";
         string month = "";
+        string year = "";
         stringstream new_file_input;
         user_file.open(USERS_STORE_FILEPATH, ios::in);
 
@@ -94,12 +103,13 @@ int main() {
             
             getline(ss, user, ',');
             getline(ss, month, ',');
+            getline(ss, year, ',');
             if(user != username_input) {
                 new_file_input << user << "," << month << "\n";
             }
         }
-
-        new_file_input << username_input << "," << current_time.first << "\n";
+        
+        new_file_input << username_input << "," << current_time.first << "," << current_time.second << "\n";
 
         user_file.close();
         user_file.open(USERS_STORE_FILEPATH, ios::out);
