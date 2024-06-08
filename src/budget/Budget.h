@@ -55,7 +55,7 @@ struct Expense {
 class Budget {
 public:
     Budget();
-    Budget(const string& user, const pair<string, string>& date);
+    Budget(const string& user, const string& month, const string& year);
 
     void addExpense(const Expense& exp);
     string getStoreName();
@@ -64,7 +64,7 @@ public:
     size_t getFixedCostSize() { return fixed_cost_.size(); }
     size_t getOneTimeCostSize() { return one_time_cost_.size(); }
     size_t getOneTimeIncomeSize() { return one_time_income_.size(); }
-    void exportToFile(std::pair<string, string> date) const;
+    void exportToFile() const;
     float sumUpExpenses() const;
     void setProfit(float value);
     float getProfit() const;
@@ -99,6 +99,8 @@ private:
 
     const string username_;
     float profit_;
+    const string month_;
+    const string year_;
 
     vector<Expense> fixed_income_;
     vector<Expense> fixed_cost_;

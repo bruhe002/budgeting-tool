@@ -63,9 +63,11 @@ Budget::Budget()
  * Overload Constructor
  * @param user The username to identify the budget
 */
-Budget::Budget(const string& user, const pair<string, string>& date) 
+Budget::Budget(const string& user, const string& month, const string& year) 
     : username_(user),
       profit_(0.0),
+      month_(month),
+      year_(year),
       fixed_income_(),
       one_time_income_(),
       fixed_cost_(),
@@ -111,10 +113,10 @@ Budget::Budget(const string& user, const pair<string, string>& date)
             // Fixed Expenses should be added regardless of date
             // Any other should have a matching date
             if (exp_type_int == 0) {
-                fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, exp_month, exp_year});
+                fixed_income_.push_back({exp_name, exp_value_float, CostType::FIXED_I, "", ""});
             } else if (exp_type_int == 1) {
-                fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, exp_month, exp_year});
-            } else if(exp_month == date.first && exp_year == date.second) {
+                fixed_cost_.push_back({exp_name, exp_value_float, CostType::FIXED_C, "", ""});
+            } else if(exp_month == month_ && exp_year == year_) {
                 if(exp_type_int == 2) {
                     one_time_cost_.push_back({exp_name, exp_value_float, CostType::ONE_TIME_C, exp_month, exp_year});
                 } else {
@@ -243,10 +245,10 @@ void Budget::deleteExpense(const CostType& type) {
 /**
  * Saves Budget to a file
 */
-void Budget::exportToFile(std::pair<string, string> date) const {
+void Budget::exportToFile() const {
     // std::pair<string, string> current_time = getCurrentTime();
 
-    string filename = "./store/budgets/" + username_ + "_budget_" + date.first + "_" + date.second + ".txt";
+    string filename = "./store/budgets/" + username_ + "_budget_" + month_ + "_" + year_ + ".txt";
 
     // Check if storage directory exists
     const char* path = "store/budgets";
