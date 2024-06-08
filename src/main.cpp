@@ -68,18 +68,18 @@ int main() {
         }
     }
 
-    Budget b(username_input, current_time);
+    Budget b(username_input, current_time.first, current_time.second);
 
     // Check if the saved user_month is the same as the current month
     float last_month_profit = 0.0;
     if(current_time.first != user_month) {
         // create a budget and export the file
-        Budget prev_bud(username_input, make_pair(user_month, current_time.second));
+        Budget prev_bud(username_input, user_month, current_time.second);
 
         // Add previous expense to the current budget
         b.addExpense({"LastMonProfit", prev_bud.sumUpExpenses(), CostType::ONE_TIME_I, current_time.first, current_time.second});
 
-        prev_bud.exportToFile(make_pair(user_month, current_time.second));
+        prev_bud.exportToFile();
 
         // Update the user month in the file
         fstream user_file;
@@ -129,7 +129,7 @@ int main() {
                     break;
                 case 'X':
                     // Export Function
-                    b.exportToFile(make_pair(current_time.first, current_time.second));
+                    b.exportToFile();
                     break;
                 case 'E':
                     system("clear");
