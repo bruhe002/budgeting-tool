@@ -25,6 +25,7 @@ bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
 tuple<string, string, string> signInPrompt();
+void displayMenu(const Budget& b);
 
 int main() {
     system("clear");
@@ -85,40 +86,8 @@ int main() {
 
     }
 
-    // Display menu
-    string budget_choice = "";
-    while(budget_choice != "E") {
-        cout << b.displayBudget();
-        cout << "Select an option: "
-                "[A]dd expense, [D]elete Expense, E[X]port Budget, [E]xit " << endl;
-        getline(cin, budget_choice);
-        if(budget_choice.size() != 1) {
-            cerr << "Invalid Option. Please try again." << endl;
-        } else {
-            char letter = static_cast<char>(toupper(budget_choice[0]) );
-            switch(letter) {
-                case 'A':
-                    // Run an add function
-                    addExpenseMenu(b);
-                    break;
-                case 'D':
-                    deleteExpenseMenu(b);
-                    break;
-                case 'X':
-                    // Export Function
-                    b.exportToFile();
-                    break;
-                case 'E':
-                    system("clear");
-                    system("cls");
-                    budget_choice = letter;
-                    break;
-                default:
-                    cerr << "Invalid Option. Please try again." << endl;
-                    break;
-            }
-        }
-    }
+    displayMenu(b);
+
     return 0;
 }
 
@@ -292,4 +261,41 @@ tuple<string, string, string> signInPrompt() {
     }
 
     return make_tuple(username_input, user_month, user_year);
+}
+
+void displayMenu(Budget& b) {
+    // Display menu
+    string budget_choice = "";
+    while(budget_choice != "E") {
+        cout << b.displayBudget();
+        cout << "Select an option: "
+                "[A]dd expense, [D]elete Expense, E[X]port Budget, [E]xit " << endl;
+        getline(cin, budget_choice);
+        if(budget_choice.size() != 1) {
+            cerr << "Invalid Option. Please try again." << endl;
+        } else {
+            char letter = static_cast<char>(toupper(budget_choice[0]) );
+            switch(letter) {
+                case 'A':
+                    // Run an add function
+                    addExpenseMenu(b);
+                    break;
+                case 'D':
+                    deleteExpenseMenu(b);
+                    break;
+                case 'X':
+                    // Export Function
+                    b.exportToFile();
+                    break;
+                case 'E':
+                    system("clear");
+                    system("cls");
+                    budget_choice = letter;
+                    break;
+                default:
+                    cerr << "Invalid Option. Please try again." << endl;
+                    break;
+            }
+        }
+    }
 }
