@@ -13,6 +13,8 @@
 #include <exception>
 #include <limits>
 #include <utility>
+#include <tuple>
+#include <functional>
 
 using namespace std;
 using namespace budget;
@@ -22,6 +24,7 @@ const string USERS_STORE_FILEPATH = "store/users/usr.csv";
 bool hasSpace(const string& str);
 void addExpenseMenu(Budget& budget);
 void deleteExpenseMenu(Budget& budget);
+tuple<string, string, string> signInPrompt();
 
 int main() {
     system("clear");
@@ -29,48 +32,12 @@ int main() {
 
     pair<string, string> current_time = getCurrentTime();
 
-    // Sign in will go here
-    bool sign_in_on = true;
-    string username_input = "";
-    string user_month = "";
-    string user_year = "";
-    
-    while(sign_in_on) {
-        cout << "Please enter your username: ";
-        getline(cin, username_input);
+    tuple<string, string, string> user_items = signInPrompt(); 
+    string username = get<0>(user_items);
+    string user_month = get<1>(user_items);
+    string user_year = get<2>(user_items);
 
-        if(username_input == "quit") {
-            exit(0);
-        }
-
-        // Open and search for username in file
-        ifstream user_file;
-        string line = "";
-        string user = "";
-        
-        user_file.open(USERS_STORE_FILEPATH, ios::in);
-
-        if(user_file.is_open()) {
-            while(getline(user_file, line)) {
-                stringstream ss(line);
-                getline(ss, user, ',');
-                getline(ss, user_month, ',');
-                getline(ss, user_year, ',');
-                if (user == username_input) {
-                    user_file.close();
-                    sign_in_on = false;
-                }
-            }
-
-            if(sign_in_on) {
-                cerr << "ERROR: Username does not exist! Please try again...\n";
-            }
-        } else {
-            cerr << "File failed to open...\n";
-        }
-    }
-
-    Budget b(username_input, current_time.first, current_time.second);
+    Budget b(username, current_time.first, current_time.second);
 
     // Check if the saved user_month is the same as the current month
     float last_month_profit = 0.0;
@@ -82,7 +49,7 @@ int main() {
             year_change = true;
             prev_month_year = user_year; 
         }
-        Budget prev_bud(username_input, user_month, prev_month_year);
+        Budget prev_bud(username, user_month, prev_month_year);
 
         // Add previous expense to the current budget
         b.addExpense({"LastMonProfit", prev_bud.sumUpExpenses(), CostType::ONE_TIME_I, current_time.first, current_time.second});
@@ -104,12 +71,12 @@ int main() {
             getline(ss, user, ',');
             getline(ss, month, ',');
             getline(ss, year, ',');
-            if(user != username_input) {
+            if(user != username) {
                 new_file_input << user << "," << month << "\n";
             }
         }
         
-        new_file_input << username_input << "," << current_time.first << "," << current_time.second << "\n";
+        new_file_input << username << "," << current_time.first << "," << current_time.second << "\n";
 
         user_file.close();
         user_file.open(USERS_STORE_FILEPATH, ios::out);
@@ -279,4 +246,50 @@ void deleteExpenseMenu(Budget& budget) {
             system("pause");
         }
     }
+}
+
+tuple<string, string, string> signInPrompt() {
+
+    // Sign in will go here
+    bool sign_in_on = true;
+    string username_input = "";
+    string user_month = "";
+    string user_year = "";
+    
+    while(sign_in_on) {
+        cout << "Please enter your username: ";
+        getline(cin, username_input);
+
+        if(username_input == "quit") {
+            exit(0);
+        }
+
+        // Open and search for username in file
+        ifstream user_file;
+        string line = "";
+        string user = "";
+        
+        user_file.open(USERS_STORE_FILEPATH, ios::in);
+
+        if(user_file.is_open()) {
+            while(getline(user_file, line)) {
+                stringstream ss(line);
+                getline(ss, user, ',');
+                getline(ss, user_month, ',');
+                getline(ss, user_year, ',');
+                if (user == username_input) {
+                    user_file.close();
+                    sign_in_on = false;
+                }
+            }
+
+            if(sign_in_on) {
+                cerr << "ERROR: Username does not exist! Please try again...\n";
+            }
+        } else {
+            cerr << "File failed to open...\n";
+        }
+    }
+
+    return make_tuple(username_input, user_month, user_year);
 }
